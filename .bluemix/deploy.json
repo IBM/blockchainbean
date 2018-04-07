@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Blockchain Starter Kit",
+  "description": "",
+  "longDescription": "The Delivery Pipeline automates the continuous deployment of the IBM Blockchain Starter Kit to IBM Cloud.",
+  "type": "object",
+  "properties": {
+    "deploy-region": {
+      "description": "The bluemix region",
+      "type": "string"
+    },
+    "deploy-organization": {
+      "description": "The bluemix org",
+      "type": "string"
+    },
+    "deploy-space": {
+      "description": "The bluemix space",
+      "type": "string"
+    }
+  },
+  "required": [
+    "deploy-region",
+    "deploy-organization",
+    "deploy-space"
+  ],
+  "form": [{
+      "type": "validator",
+      "url": "/devops/setup/bm-helper/helper.html"
+    },
+    {
+      "type": "table",
+      "columnCount": 1,
+      "widths": [ "100%" ],
+      "items": [
+        {
+          "type": "label",
+          "title": "Cloud Foundry and OpenWhisk"
+        },
+        {
+          "type": "label",
+          "title": "The toolchain will deploy the Fibonacci service as a Cloud Foundry application with a random route and as an OpenWhisk action. The action will also be exposed as an HTTP endpoint. Specify the space where the application and the action will be deployed."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "columnCount": 3,
+      "widths": ["33%", "33%", "33%"],
+      "items": [
+        {
+          "type": "label",
+          "title": "Region (only US South is supported)"
+        },
+        {
+          "type": "label",
+          "title": "Organization"
+        },
+        {
+          "type": "label",
+          "title": "Space"
+        },
+        {
+          "type": "select",
+          "key": "deploy-region"
+        },
+        {
+          "type": "select",
+          "key": "deploy-organization"
+        },
+        {
+          "type": "select",
+          "key": "deploy-space",
+          "readonly": false
+        }
+      ]
+    }
+  ]
+}

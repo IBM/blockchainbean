@@ -1,0 +1,44 @@
+version: '2'
+template:
+  name: "Blockchain Starter Kit"
+  description: "Deploy the IBM Blockchain Starter Kit to IBM Cloud."
+  required:
+    - build
+    - repo
+    - deploy
+
+toolchain:
+  name: 'blockchain-starter-kit-{{timestamp}}'
+
+services:
+  repo:
+    service_id: githubpublic
+    parameters:
+      repo_name: 'blockchain-starter-kit'
+      repo_url: 'https://github.com/sstone1/blockchain-starter-kit'
+      type: clone
+      has_issues: true
+      enable_traceability: true
+  build:
+    service_id: pipeline
+    parameters:
+      services:
+        - repo
+      name: '{{services.repo.parameters.repo_name}}'
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          REPO: repo
+          SPACE_NAME: '{{form.pipeline.parameters.deploy-space}}'
+          ORG_NAME: '{{form.pipeline.parameters.deploy-organization}}'
+          REGION_ID: '{{form.pipeline.parameters.deploy-region}}'
+        execute: true
+
+form:
+  pipeline:
+    # parameters:
+      # deploy-region: 'ibm:yp:us-south'
+    schema:
+      $ref: deploy.json
