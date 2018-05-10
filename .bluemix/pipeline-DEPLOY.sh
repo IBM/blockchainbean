@@ -211,9 +211,7 @@ function deploy_cf_app {
     echo deploying cloud foundry app ${APP}
     pushd apps/${APP}
     cf push ${APP} -i 1 -m 128M --no-start
-    cf set-env ${APP} REST_SERVER_URLS "${REST_SERVER_URLS}"
     cf bind-service ${APP} ${BLOCKCHAIN_SERVICE_INSTANCE} -c '{"permissions":"read-only"}'
-    cf start ${APP}
     popd
 }
 
