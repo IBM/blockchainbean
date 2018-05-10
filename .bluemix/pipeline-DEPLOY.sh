@@ -26,7 +26,6 @@ function deploy_contract {
     if [ -f contracts/${CONTRACT}/package.json ]
     then
         deploy_composer_contract ${CONTRACT}
-        deploy_composer_rest_server ${CONTRACT}
     elif ls contracts/${CONTRACT}/*.go > /dev/null 2>&1
     then
         deploy_fabric_contract ${CONTRACT}
@@ -59,6 +58,9 @@ function deploy_composer_contract {
             if [[ "${OUTPUT}" = *"REQUEST_TIMEOUT"* ]]
             then
                 sleep 30
+            elif [[ "${OUTPUT}" = *"premature execution"* ]]
+            then
+                sleep 30
             elif [[ "${OUTPUT}" = *"chaincode exists"* ]]
             then
                 BUSINESS_NETWORK_UPGRADE=true
@@ -75,6 +77,12 @@ function deploy_composer_contract {
                 if [[ "${OUTPUT}" = *"REQUEST_TIMEOUT"* ]]
                 then
                     sleep 30
+                elif [[ "${OUTPUT}" = *"premature execution"* ]]
+                then
+                    sleep 30
+                elif [[ "${OUTPUT}" = *"version already exists for chaincode"* ]]
+                then
+                    break
                 else
                     echo failed to upgrade composer contract ${CONTRACT}
                     exit 1
@@ -89,30 +97,6 @@ function deploy_composer_contract {
         fi
         composer network ping -c ${BUSINESS_NETWORK_CARD}
     done
-    popd
-}
-
-function deploy_composer_rest_server {
-    CONTRACT=$1
-    echo deploying composer rest server ${CONTRACT}
-    pushd contracts/${CONTRACT}
-    BUSINESS_NETWORK_NAME=$(jq --raw-output '.name' package.json)
-    BUSINESS_NETWORK_CARD=admin@${BUSINESS_NETWORK_NAME}
-    CF_APP_NAME=composer-rest-server-${BUSINESS_NETWORK_NAME}
-    cf push \
-        ${CF_APP_NAME} \
-        --docker-image sstone1/composer-rest-server \
-        -i 1 \
-        -m 256M \
-        --no-start \
-        --no-manifest
-    cf set-env ${CF_APP_NAME} NODE_CONFIG "${NODE_CONFIG}"
-    cf set-env ${CF_APP_NAME} COMPOSER_CARD ${BUSINESS_NETWORK_CARD}
-    cf set-env ${CF_APP_NAME} COMPOSER_NAMESPACES required
-    cf set-env ${CF_APP_NAME} COMPOSER_WEBSOCKETS true
-    cf start ${CF_APP_NAME}
-    REST_SERVER_URL=$(cf app ${CF_APP_NAME} | grep routes: | awk '{print $2}')
-    export REST_SERVER_URLS=$(echo ${REST_SERVER_URLS} | jq ". + {\"${BUSINESS_NETWORK_NAME}\":\"https://${REST_SERVER_URL}\"}")
     popd
 }
 
@@ -163,6 +147,44 @@ EOF
     popd
 }
 
+function deploy_rest_servers {
+    for CONTRACT in ${CONTRACTS}
+    do
+        deploy_rest_server ${CONTRACT}
+    done
+}
+
+function deploy_rest_server {
+    CONTRACT=$1
+    if [ -f contracts/${CONTRACT}/package.json ]
+    then
+        deploy_composer_rest_server ${CONTRACT}
+    else
+        echo rest server not supported for contract type ${CONTRACT}
+    fi
+}
+
+function deploy_composer_rest_server {
+    CONTRACT=$1
+    echo deploying rest server for composer contract ${CONTRACT}
+    pushd contracts/${CONTRACT}
+    BUSINESS_NETWORK_NAME=$(jq --raw-output '.name' package.json)
+    BUSINESS_NETWORK_CARD=admin@${BUSINESS_NETWORK_NAME}
+    CF_APP_NAME=composer-rest-server-${BUSINESS_NETWORK_NAME}
+    cf push \
+        ${CF_APP_NAME} \
+        --docker-image sstone1/composer-rest-server \
+        -i 1 \
+        -m 256M \
+        --no-start \
+        --no-manifest
+    cf set-env ${CF_APP_NAME} NODE_CONFIG "${NODE_CONFIG}"
+    cf set-env ${CF_APP_NAME} COMPOSER_CARD ${BUSINESS_NETWORK_CARD}
+    cf set-env ${CF_APP_NAME} COMPOSER_NAMESPACES required
+    cf set-env ${CF_APP_NAME} COMPOSER_WEBSOCKETS true
+    popd
+}
+
 function deploy_apps {
     for APP in ${APPS}
     do
@@ -203,6 +225,99 @@ function deploy_docker_app {
     popd
 }
 
+function gather_rest_server_urls {
+    for CONTRACT in ${CONTRACTS}
+    do
+        gather_rest_server_url ${CONTRACT}
+    done
+}
+
+function gather_rest_server_url {
+    CONTRACT=$1
+    if [ -f contracts/${CONTRACT}/package.json ]
+    then
+        gather_composer_rest_server_url ${CONTRACT}
+    else
+        echo rest server not supported for contract type ${CONTRACT}
+    fi
+}
+
+function gather_composer_rest_server_url {
+    CONTRACT=$1
+    echo gathering rest server url for composer contract ${CONTRACT}
+    pushd contracts/${CONTRACT}
+    BUSINESS_NETWORK_NAME=$(jq --raw-output '.name' package.json)
+    CF_APP_NAME=composer-rest-server-${BUSINESS_NETWORK_NAME}
+    REST_SERVER_URL=$(cf app ${CF_APP_NAME} | grep routes: | awk '{print $2}')
+    export REST_SERVER_URLS=$(echo ${REST_SERVER_URLS} | jq ". + {\"${BUSINESS_NETWORK_NAME}\":\"https://${REST_SERVER_URL}\"}")
+    popd
+}
+
+function start_rest_servers {
+    for CONTRACT in ${CONTRACTS}
+    do
+        start_rest_server ${CONTRACT}
+    done
+}
+
+function start_rest_server {
+    CONTRACT=$1
+    if [ -f contracts/${CONTRACT}/package.json ]
+    then
+        start_composer_rest_server ${CONTRACT}
+    else
+        echo rest server not supported for contract type ${CONTRACT}
+    fi
+}
+
+function start_composer_rest_server {
+    CONTRACT=$1
+    echo starting rest server for composer contract ${CONTRACT}
+    pushd contracts/${CONTRACT}
+    BUSINESS_NETWORK_NAME=$(jq --raw-output '.name' package.json)
+    CF_APP_NAME=composer-rest-server-${BUSINESS_NETWORK_NAME}
+    cf start ${CF_APP_NAME}
+    popd
+}
+
+function start_apps {
+    for APP in ${APPS}
+    do
+        start_app ${APP}
+    done
+}
+
+function start_app {
+    APP=$1
+    if [ -f apps/${APP}/manifest.yml ]
+    then
+        start_cf_app ${APP}
+    elif [ -f apps/${APP}/Dockerfile ]
+    then
+        start_docker_app ${APP}
+    else
+        echo unrecognized app type ${APP}
+        exit 1
+    fi
+}
+
+function start_cf_app {
+    APP=$1
+    echo starting cloud foundry app ${APP}
+    pushd apps/${APP}
+    cf set-env ${APP} REST_SERVER_URLS "${REST_SERVER_URLS}"
+    cf start ${APP}
+    popd
+}
+
+function start_docker_app {
+    APP=$1
+    echo starting docker app ${APP}
+    pushd apps/${APP}
+    echo cannot start docker apps just yet
+    popd
+}
+
 install_nodejs
 install_jq
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
@@ -217,5 +332,22 @@ if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     create_blockchain_network_card
 fi
-deploy_contracts
-deploy_apps
+
+deploy_contracts &
+DEPLOY_CONTRACTS_PID=$!
+deploy_rest_servers &
+DEPLOY_REST_SERVERS_PID=$!
+deploy_apps &
+DEPLOY_APPS_PID=$!
+wait ${DEPLOY_CONTRACTS_PID}
+wait ${DEPLOY_REST_SERVERS_PID}
+wait ${DEPLOY_APPS_PID}
+
+gather_rest_server_urls
+
+start_rest_servers &
+START_REST_SERVERS_PID=$!
+start_apps &
+START_APPS_PID=$!
+wait ${START_REST_SERVERS_PID}
+wait ${START_APPS_PID}

@@ -81,7 +81,7 @@ function test_node_app {
     do
         if jq -e ".scripts.${SCRIPT}" package.json > /dev/null 2>&1
         then
-            echo npm run ${SCRIPT}
+            npm run ${SCRIPT}
         fi
     done
     rm -rf node_modules
