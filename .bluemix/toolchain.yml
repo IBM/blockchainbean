@@ -14,7 +14,7 @@ services:
   repo:
     service_id: githubpublic
     parameters:
-      repo_name: 'blockchain-starter-kit'
+      repo_name: 'blockchain-starter-kit-{{timestamp}}'
       repo_url: 'https://github.com/sstone1/blockchain-starter-kit'
       type: clone
       has_issues: true
@@ -26,6 +26,7 @@ services:
         - repo
       name: '{{services.repo.parameters.repo_name}}'
       ui-pipeline: true
+      sin: 'test'
       configuration:
         content:
           $text: pipeline.yml

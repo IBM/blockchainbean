@@ -251,6 +251,46 @@ function gather_composer_rest_server_url {
     popd
 }
 
+function gather_app_urls {
+    for APP in ${APPS}
+    do
+        gather_app_url ${APP}
+    done
+}
+
+function gather_app_url {
+    APP=$1
+    if [ -f apps/${APP}/manifest.yml ]
+    then
+        gather_cf_app_url ${APP}
+    elif [ -f apps/${APP}/Dockerfile ]
+    then
+        gather_docker_app_url ${APP}
+    else
+        echo unrecognized app type ${APP}
+        exit 1
+    fi
+}
+
+function gather_cf_app_url {
+    APP=$1
+    echo gathering url for cloud foundry app ${APP}
+    pushd apps/${APP}
+    if [[ "${APP}" = "${BLOCKCHAIN_SAMPLE_APP}" ]]
+    then
+        export BLOCKCHAIN_SAMPLE_URL=$(cf app ${APP} | grep routes: | awk '{print $2}')
+    fi
+    popd
+}
+
+function gather_docker_app_url {
+    APP=$1
+    echo gathering url for docker app ${APP}
+    pushd apps/${APP}
+    echo cannot gather urls for docker apps just yet
+    popd
+}
+
 function start_rest_servers {
     for CONTRACT in ${CONTRACTS}
     do
@@ -330,6 +370,7 @@ if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     create_blockchain_network_card
 fi
+update_blockchain_deploy_status 1
 
 deploy_contracts &
 DEPLOY_CONTRACTS_PID=$!
@@ -338,14 +379,22 @@ DEPLOY_REST_SERVERS_PID=$!
 deploy_apps &
 DEPLOY_APPS_PID=$!
 wait ${DEPLOY_CONTRACTS_PID}
+update_blockchain_deploy_status 2
 wait ${DEPLOY_REST_SERVERS_PID}
+update_blockchain_deploy_status 3
 wait ${DEPLOY_APPS_PID}
+update_blockchain_deploy_status 4
 
 gather_rest_server_urls
+update_blockchain_deploy_status 5
+gather_app_urls
+update_blockchain_deploy_status 6
 
 start_rest_servers &
 START_REST_SERVERS_PID=$!
 start_apps &
 START_APPS_PID=$!
 wait ${START_REST_SERVERS_PID}
+update_blockchain_deploy_status 7
 wait ${START_APPS_PID}
+update_blockchain_deploy_status 8
