@@ -4,6 +4,8 @@ set -ex
 
 source .bluemix/config.sh
 
+export COMPOSER_VERSION=0.19.5
+
 function install_nodejs {
     npm config delete prefix
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
@@ -16,7 +18,7 @@ function install_nodejs {
 }
 
 function install_composer {
-    npm install -g composer-cli @ampretia/composer-wallet-cloudant
+    npm install -g composer-cli@${COMPOSER_VERSION} @ampretia/composer-wallet-cloudant
 }
 
 function install_jq {
