@@ -2,9 +2,9 @@
 
 A project to track coffee while it makes it's way through the supply chain. Below is a description of how to get started testing the network.
 
-1. [Create participants](#1-Create-participants)
-2. [Create assets](#2-Create-assets)
-3. [Transfer assets](#3-Transfer-assets)
+1. [Create participants](#1-create-participants)
+2. [Create assets (coffee)](#2-create-assets)
+3. [Transfer assets (coffee)](#3-transfer-assets)
 
 ## 1. Create participants 
 
