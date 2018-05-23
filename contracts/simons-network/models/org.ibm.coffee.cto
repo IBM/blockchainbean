@@ -1,82 +1,29 @@
+/**
+ * Write your model definitions here
+ */
 
-namespace org.ibm.coffee
+namespace org.sstone1
 
-enum CoffeeRoast {
-  o LIGHT
-  o MEDIUM
-  o DARK
+participant SampleParticipant identified by participantId {
+  o String participantId
+  o String firstName
+  o String lastName
 }
 
-enum Size {
-  o SMALL
-  o MEDIUM
-  o LARGE
+asset SampleAsset identified by assetId {
+  o String assetId
+  --> SampleParticipant owner
+  o String value
 }
 
-enum State {
-  o READY_FOR_DISTRIBUTION
-  o IMPORTED
-  o REGULATION_TEST_PASSED
-  o READY_FOR_SALE
+transaction SampleTransaction {
+  --> SampleAsset asset
+  o String newValue
 }
 
-concept Address {
-  o String city optional
-  o String country
-  o String street optional
-  o String zip optional
+event SampleEvent {
+  --> SampleAsset asset
+  o String oldValue
+  o String newValue
 }
-
-abstract participant Business {
-  o String organization
-  o Address address
-  o Double balance
-  o Coffee[] batches
-}
-
-participant Grower identified by growerId extends Business {
-  o Boolean isFairTrade
-  o String growerId
-}
-
-participant Importer identified by importerId extends Business {
-     o String importerId
-}
-
-participant Regulator identified by regulatorId extends Business{
-  o String regulatorId
-}
-
-participant Retailer identified by retailerId extends Business{
-  o String retailerId
-}
-
-asset Coffee identified by batchId {
-  o String batchId
-  o Size size
-  o CoffeeRoast roast
-  o State batchState
-  --> Business owner
-}
-
-transaction transferCoffee {
-  --> Business newOwner
-  o String batchId
-  o String ownerType
-}
-
-transaction addCoffee{
-  o Size size
-  o CoffeeRoast roast
-  o State batchState
-  --> Grower grower
-}
-
-event transferComplete {
-  o String batchId
-  --> Business oldOwner
-  --> Business newOwner
-  o String timeStamp
-}
-
 
