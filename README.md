@@ -3,8 +3,8 @@
 A project to track coffee while it makes it's way through the supply chain. Below is a description of how to get started testing the network.
 
 1. [Create participants](#1-create-participants)
-2. [Create assets (coffee)](#2-create-assets-(coffee))
-3. [Transfer assets (coffee)](#3-transfer-assets-(coffee))
+2. [Create assets (coffee)](#2-create-assets)
+3. [Transfer assets (coffee)](#3-transfer-assets)
 
 ## 1. Create participants 
 
@@ -40,7 +40,7 @@ Then create (POST) a 'Importer' participant with the following json:
   "batches": []
 }`
 
-## 2. Create assets (coffee)
+## 2. Create assets
 
 
 Now that we have a grower and aa importer, we can add a batch of coffee. POST an 'addCoffee' transaction, and add the following json: 
@@ -55,7 +55,7 @@ Now that we have a grower and aa importer, we can add a batch of coffee. POST an
 
 Next, let's grab the batchId by doing a GET on the coffee asset: 9mf2sg8cd
 
-## 3. Transfer assets (coffee)
+## 3. Transfer assets
 
 
 Next, let's transfer the batch '9mf2sg8cd' from the grower to the importer. POST a 'transferCoffee' transaction with the following json:
