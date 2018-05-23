@@ -12,42 +12,6 @@
  * limitations under the License.
  */
 
-/**
- * Sample access control list.
- */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.sstone1.SampleParticipant"
-    operation: READ
-    resource: "org.sstone1.*"
-    action: ALLOW
-}
-
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.sstone1.SampleParticipant"
-    operation: CREATE
-    resource: "org.sstone1.SampleTransaction"
-    action: ALLOW
-}
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.sstone1.SampleParticipant"
-    operation: ALL
-    resource(r): "org.sstone1.SampleAsset"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
-
-rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.Participant"
-  operation: ALL
-  resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
-}
-
 rule NetworkAdminUser {
     description: "Grant business network administrators full access to user resources"
     participant: "org.hyperledger.composer.system.NetworkAdmin"
@@ -62,4 +26,14 @@ rule NetworkAdminSystem {
     operation: ALL
     resource: "org.hyperledger.composer.system.**"
     action: ALLOW
+}
+
+rule historianAccess{
+  description: "Only allow members to read historian records referencing transactions they submitted."
+  participant(p): "org.ibm.coffee.Business"
+  operation: READ
+  resource(r): "org.hyperledger.composer.system.HistorianRecord"
+  condition: (r.participantInvoking.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+
 }
