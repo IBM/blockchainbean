@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "description": "Demo",
   "scripts": {
-    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/coffeetrackr.bna",
-    "pretest": "npm run lint",
-    "lint": "eslint .",
-    "test": "nyc mocha -t 0 test/*.js && cucumber-js"
+    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/coffeetrackr.bna"
   },
   "author": "Horea Porutiu",
   "email": "horeaporutiu@gmail.com",
