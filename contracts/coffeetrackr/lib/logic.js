@@ -44,22 +44,22 @@ async function transferCoffee(coffeeBatch) {
     event.oldOwner = coffee.owner;
     event.newOwner = coffeeBatch.newOwner;
     emit(event);
-    
+    coffeeBatch.oldOwner = coffee.owner;
     coffee.owner = coffeeBatch.newOwner;
     if(!coffeeBatch.newOwner.batches) {
       coffeeBatch.newOwner.batches = [];
     }
     coffeeBatch.newOwner.batches.push(coffee);
    
-    if (coffeeBatch.ownerType.toLowerCase() == 'importer') {
+    if (coffeeBatch.newOwnerType.toLowerCase() == 'importer') {
 
       const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Importer');
-	    await participantRegistry.update(coffeeBatch.newOwner);
+      await participantRegistry.update(coffeeBatch.newOwner);
       coffee.batchState = "IMPORTED";
       
-    } else if (coffeeBatch.ownerType.toLowerCase() == 'regulator') {
+    } else if (coffeeBatch.newOwnerType.toLowerCase() == 'regulator') {
       const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
-	    await participantRegistry.update(coffeeBatch.newOwner);
+	  await participantRegistry.update(coffeeBatch.newOwner);
       coffee.batchState = "REGULATION_TEST_PASSED";
     } else {
       const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Retailer');
@@ -68,7 +68,6 @@ async function transferCoffee(coffeeBatch) {
     }
     
     await assetRegistry.update(coffee);
-
     
     
   } else {

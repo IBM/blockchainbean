@@ -60,8 +60,9 @@ asset Coffee identified by batchId {
 
 transaction transferCoffee {
   --> Business newOwner
+  --> Business oldOwner
   o String batchId
-  o String ownerType
+  o String newOwnerType
 }
 
 transaction addCoffee{
