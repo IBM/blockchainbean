@@ -43,14 +43,15 @@ Then create (POST) a 'Importer' participant with the following json:
 ## 2. Create assets
 
 
-Now that we have a grower and aa importer, we can add a batch of coffee. POST an 'addCoffee' transaction, and add the following json: 
+Now that we have a grower and a importer, we can add a batch of coffee. POST an 'addCoffee' transaction, and add the following json: 
 
 `{
   "$class": "org.ibm.coffee.addCoffee",
   "size": "SMALL",
   "roast": "LIGHT",
   "batchState": "READY_FOR_DISTRIBUTION",
-  "grower": "resource:org.ibm.coffee.Grower#growerA"
+  "batchId": "9mf2sg8cd",
+  "grower": "resource:org.ibm.coffee.Grower#9243"
 }`
 
 Next, let's grab the batchId by doing a GET on the coffee asset: 9mf2sg8cd
@@ -63,8 +64,9 @@ Next, let's transfer the batch '9mf2sg8cd' from the grower to the importer. POST
 `{
   "$class": "org.ibm.coffee.transferCoffee",
   "newOwner": "resource:org.ibm.coffee.Importer#importerA",
+  "oldOwner": "resource:org.ibm.coffee.Grower#growerA",
   "batchId": "9mf2sg8cd",
-  "ownerType": "importer"
+  "newOwnerType": "importer"
 }`
 
 Cool. Now the coffee's owner is changed to importerA. 
@@ -77,11 +79,12 @@ You should see something like this:
 
  `{
     "$class": "org.ibm.coffee.transferCoffee",
-    "newOwner": "resource:org.ibm.coffee.Regulator#regulatorA",
+    "newOwner": "resource:org.ibm.coffee.Importer#importerA",
+    "oldOwner": "resource:org.ibm.coffee.Grower#growerA",
     "batchId": "9mf2sg8cd",
-    "ownerType": "regulator",
-    "transactionId": "69b0a3501e6851c79a823439bf7d0843b8d30ad11b9ad178bf61444b92199638",
-    "timestamp": "2018-05-23T23:23:42.284Z"
+    "newOwnerType": "importer",
+    "transactionId": "9587a741f7a483d9b006f97758d75004c1fa64b8d8e783b2e9017f2d1a465783",
+    "timestamp": "2018-05-25T00:19:27.873Z"
   }`
   
   Cool. Now you can imagine that when we create a regulator and a retailer, and we transfer the coffee to them, the last query would have 3 transactions instead, showing that the coffee has passed through not only the importer, but the regulator and reatailer as well.
