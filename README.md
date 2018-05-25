@@ -1,5 +1,6 @@
 # blockchain-starter-kit
 
+⚠️⚠️⚠️⚠️⚠️WIP⚠️⚠️⚠️⚠️⚠️
 A project to track coffee while it makes it's way through the supply chain. Below is a description of how to get started testing the network.
 
 1. [Create participants](#1-create-participants)
