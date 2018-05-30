@@ -3,9 +3,8 @@ template:
   name: "Blockchain Starter Kit"
   description: "Deploy the IBM Blockchain Starter Kit to IBM Cloud."
   required:
-    - build
     - repo
-    - deploy
+    - build
 
 toolchain:
   name: 'blockchain-starter-kit-{{timestamp}}'
@@ -14,7 +13,7 @@ services:
   repo:
     service_id: githubpublic
     parameters:
-      repo_name: 'blockchain-starter-kit-{{timestamp}}'
+      repo_name: '{{toolchain.name}}'
       repo_url: 'https://github.com/sstone1/blockchain-starter-kit'
       type: clone
       has_issues: true
@@ -35,11 +34,17 @@ services:
           SPACE_NAME: '{{form.pipeline.parameters.deploy-space}}'
           ORG_NAME: '{{form.pipeline.parameters.deploy-organization}}'
           REGION_ID: '{{form.pipeline.parameters.deploy-region}}'
+          BLOCKCHAIN_SERVICE_INSTANCE: '{{form.pipeline.parameters.blockchain-service-instance}}'
+          CLOUDANT_SERVICE_INSTANCE: '{{form.pipeline.parameters.cloudant-service-instance}}'
         execute: true
 
 form:
   pipeline:
-    # parameters:
-      # deploy-region: 'ibm:yp:us-south'
     schema:
       $ref: deploy.json
+    parameters:
+      deploy-region: '{{region}}'
+      deploy-organization: '{{organization}}'
+      deploy-space: '{{space}}'
+      blockchain-service-instance: '{{sin}}'
+      cloudant-service-instance: '{{toolchain.name}}'

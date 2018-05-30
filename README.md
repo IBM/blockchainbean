@@ -79,6 +79,8 @@ You must now specify a name for your clone of this GitHub repository. We recomme
 
 ![Toolchain GitHub options specified](./media/toolchain-github-specified.png)
 
+Finally, you must specify a name for the Blockchain service instance you will be using on the Delivery Pipeline form. This can either be an existing service name, or the name of a new Blockchain service to create. Similary for a Cloudant NoSQL DB service which will be used as storage for a Composer wallet. For this example, I'll use "simons-blockchain-service" as the name of the new Blockchain service and "simons-cloudant-service" as the name of the new Cloudant NoSQL DB service.
+
 That's it! Click the "Create" button to create your new DevOps toolchain, and GitHub repository. You should be taken to your newly created DevOps toolchain page:
 
 ![Toolchain created](./media/toolchain-created.png)
