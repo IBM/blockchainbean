@@ -24,6 +24,10 @@ stages:
     job: Build
   triggers:
   - type: stage
+  properties:
+  - name: BLOCKCHAIN_EXISTING_SERVICE_INSTANCE
+    value: '{{sin}}'
+    type: text
   jobs:
   - name: Deploy
     type: deployer
