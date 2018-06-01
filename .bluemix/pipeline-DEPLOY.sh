@@ -357,7 +357,6 @@ function start_docker_app {
 }
 
 install_nodejs
-install_jq
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     install_composer
