@@ -51,11 +51,77 @@ participant Retailer identified by retailerId extends Business{
 }
 
 asset Coffee identified by batchId {
+  # Standard attributes
   o String batchId
   o Size size
   o CoffeeRoast roast
   o State batchState
+
+  # ICO Certificate of Origin
+  o ICO_CertificateOfOriginId Number
+  o ICO_ProducingCountry string
+  o ICO_CountryOfDestination string
+  o ICO_DateOfExport date
+  o ICO_Organic bool
+  o ICO_IdentificationMark string
+
+  # Organic Farming Certiificate
+  o OrganicFarmingCertificate Number
+  o OFC_InvoiceNumber number
+  o OFC_InvoiceDate date
+  o OFC_ContainerNumber string
+  o OFC_ContractNumber
+  o OFC_ICO_No ICO
+
+  # Packing List
+  o PackingListId number
+  o PL_ICO_no ICO
+  o PL_FDA_NO number
+  o PL_Bill_of_Lading_No number
+  o PL_Container_No number
+  o PL_Seal_no number
+
+
+  # Bill Of Lading
+  o BillOfLadingId number
+  o BOL_Booking_no number
+  o BOL_vessel string
+  o BOL_voyage_no number
+  o BOL_contract
+  o BOL_Cert_no number
+  o BOL_ICO_no ICO
+
+
+  # Product List (information from grower to roaster)
+  o ProductListingId number
+  o PrL_Grower string
+  o PrL_Variety string
+  o PrL_Harvest string
+  o PrL_Altitude string
+  o PrL_Soil string
+  o PrL_Process string
+
+
+  # Purchase Confirmation
+  o PurchaseConfirmationId number
+  o PC_Date date
+  o PC_Order_id number
+  o PC_ICO_No ICO
+  o PC_Invoice_No number
+  o PC_RNY_FLO_ID number
+  o PC_Brook_FLO_ID number
+
   --> Business owner
+}
+
+
+
+asset cupCoffee identified by cupId {
+  o String batchId
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+  --> Coffee batchId
 }
 
 transaction transferCoffee {
