@@ -190,3 +190,64 @@ async function certifyOrganic(coffeeBatch) {
     throw new Error('the batch you specified does not exist!');
   }
 }
+
+
+/**
+ * Ship the coffee
+ * @param {org.ibm.coffee.shipCoffee} tx The send message instance.
+ * @transaction
+ */
+async function shipCoffee(coffeeBatch) {
+  // this one actually uses two documents, the packing list and BoL
+
+  if (coffeeBatch.batchId.length <= 0) {
+    throw new Error('Please enter the batchId');
+  }
+
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+
+  const exists = await assetRegistry.exists(coffeeBatch.batchId);
+
+  if (exists) {
+    const coffee = await assetRegistry.get(coffeeBatch.batchId);
+
+    // Create and emit a regulation event
+    var event = getFactory().newEvent('org.ibm.coffee', 'shippingComplete');
+    event.batchId = coffeeBatch.batchId;
+    var dateStr = new Date();
+    dateStr = dateStr.toString();
+    event.timeStamp = dateStr;
+    event.grower = coffeeBatch.grower;
+    event.shipper = coffeeBatch.shipper;
+    event.trader = coffeeBatch.trader;
+    emit(event);
+
+    /**
+     * # Packing List
+     */
+    coffee.PL_PackingListId  = coffeeBatch.PL_PackingListId;
+    coffee.PL_ICO_no  = coffeeBatch.PL_ICO_no;
+    coffee.PL_FDA_NO  = coffeeBatch.PL_FDA_NO;
+    coffee.PL_Bill_of_Lading_No  = coffeeBatch.PL_Bill_of_Lading_No;
+    coffee.PL_Container_No  = coffeeBatch.PL_Container_No;
+    coffee.PL_Seal_no  = coffeeBatch.PL_Seal_no;
+
+
+    /**
+     * # Bill Of Lading
+     */
+    coffee.BOL_BillOfLadingId  = coffeeBatch.BOL_BillOfLadingId;
+    coffee.BOL_Booking_no  = coffeeBatch.BOL_Booking_no;
+    coffee.BOL_vessel  = coffeeBatch.BOL_vessel;
+    coffee.BOL_voyage_no = coffeeBatch.BOL_voyage_no;
+    coffee.BOL_contract = coffeeBatch.BOL_contract;
+    coffee.BOL_Cert_no = coffeeBatch.BOL_Cert_no;
+    coffee.BOL_ICO_no  = coffeeBatch.BOL_ICO_no;
+
+    // publish update
+    await assetRegistry.update(coffee);
+
+  } else {
+    throw new Error('the batch you specified does not exist!');
+  }
+}
