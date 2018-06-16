@@ -154,9 +154,23 @@ transaction addCoffee{
   --> Grower grower
 }
 
+transaction regulateCoffee{
+  --> Regulator regulator
+  o String batchId
+  o Double ICO_CertificateOfOriginId
+  o String ICO_ProducingCountry
+}
+
 event transferComplete {
   o String batchId
   --> Business oldOwner
   --> Business newOwner
+  o String timeStamp
+}
+
+event regulationComplete {
+  o String batchId
+  --> Business owner
+  --> Regulator regulator
   o String timeStamp
 }

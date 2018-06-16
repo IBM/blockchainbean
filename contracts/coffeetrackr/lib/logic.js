@@ -101,3 +101,45 @@ async function addCoffee(newCoffee) {
   await assetRegistry.add(coffee);
   await participantRegistry.update(newCoffee.grower);
 }
+
+/**
+ * Regulate
+ * @param {org.ibm.coffee.regulateCoffee} tx The send message instance.
+ * @transaction
+ */
+async function regulateCoffeeICO(coffeeBatch) {
+
+  if (coffeeBatch.batchId.length <= 0) {
+    throw new Error('Please enter the batchId');
+  }
+
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+
+  const exists = await assetRegistry.exists(coffeeBatch.batchId);
+
+  if (exists) {
+    const coffee = await assetRegistry.get(coffeeBatch.batchId);
+
+    // Create an emit a regulation event
+    var event = getFactory().newEvent('org.ibm.coffee', 'regulationComplete');
+    event.batchId = coffeeBatch.batchId;
+    var dateStr = new Date();
+    dateStr = dateStr.toString();
+    event.timeStamp = dateStr;
+    event.owner = coffee.owner;
+    event.regulator = coffeeBatch.regulator;
+    emit(event);
+
+    // Annotate coffee asset with certified data
+    coffee.ICO_CertificateOfOriginId = coffeeBatch.ICO_CertificateOfOriginId;
+    coffee.ICO_ProducingCountry = coffeeBatch.ICO_ProducingCountry;
+
+    // publish update
+    await assetRegistry.update(coffee);
+
+  } else {
+    throw new Error('the batch you specified does not exist!');
+  }
+
+
+}
