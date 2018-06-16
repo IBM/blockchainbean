@@ -159,6 +159,10 @@ transaction regulateCoffee{
   o String batchId
   o Double ICO_CertificateOfOriginId
   o String ICO_ProducingCountry
+  o String ICO_CountryOfDestination
+  o DateTime ICO_DateOfExport
+  o Boolean ICO_Organic
+  o String ICO_IdentificationMark
 }
 
 event transferComplete {

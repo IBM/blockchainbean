@@ -133,6 +133,10 @@ async function regulateCoffeeICO(coffeeBatch) {
     // Annotate coffee asset with certified data
     coffee.ICO_CertificateOfOriginId = coffeeBatch.ICO_CertificateOfOriginId;
     coffee.ICO_ProducingCountry = coffeeBatch.ICO_ProducingCountry;
+    coffee.ICO_CountryOfDestination = coffeeBatch.ICO_CountryOfDestination;
+    coffee.ICO_DateOfExport = coffeeBatch.ICO_DateOfExport;
+    coffee.ICO_Organic = coffeeBatch.ICO_Organic;
+    coffee.ICO_IdentificationMark = coffeeBatch.ICO_IdentificationMark;
 
     // publish update
     await assetRegistry.update(coffee);
