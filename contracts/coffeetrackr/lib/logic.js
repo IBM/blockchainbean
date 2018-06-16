@@ -135,7 +135,7 @@ async function regulateCoffeeICO(coffeeBatch) {
     coffee.ICO_ProducingCountry = coffeeBatch.ICO_ProducingCountry;
     coffee.ICO_CountryOfDestination = coffeeBatch.ICO_CountryOfDestination;
     coffee.ICO_DateOfExport = coffeeBatch.ICO_DateOfExport;
-    coffee.ICO_Organic = coffeeBatch.ICO_Organic;
+    coffee.ICO_Organic = coffeeBatch.regulateCoffeeICO_Organic;
     coffee.ICO_IdentificationMark = coffeeBatch.ICO_IdentificationMark;
 
     // publish update
@@ -147,3 +147,53 @@ async function regulateCoffeeICO(coffeeBatch) {
 
 
 }
+
+
+
+/**
+ * Certify the coffee is organic
+ * @param {org.ibm.coffee.certifyOrganic} tx The send message instance.
+ * @transaction
+ */
+async function certifyOrganic(coffeeBatch) {
+
+  if (coffeeBatch.batchId.length <= 0) {
+    throw new Error('Please enter the batchId');
+  }
+
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+
+  const exists = await assetRegistry.exists(coffeeBatch.batchId);
+
+  if (exists) {
+    const coffee = await assetRegistry.get(coffeeBatch.batchId);
+
+    // Create and emit a regulation event
+    var event = getFactory().newEvent('org.ibm.coffee', 'regulationComplete');
+    event.batchId = coffeeBatch.batchId;
+    var dateStr = new Date();
+    dateStr = dateStr.toString();
+    event.timeStamp = dateStr;
+    event.owner = coffee.owner;
+    event.regulator = coffeeBatch.regulator;
+    emit(event);
+
+    // Annotate coffee asset with certified data
+    coffee.OFC_OrganicFarmingCertificateId = coffeeBatch.OFC_OrganicFarmingCertificateId;
+    coffee.OFC_InvoiceNo = coffeeBatch.OFC_InvoiceNo;
+    coffee.OFC_InvoiceDate  = coffeeBatch.OFC_InvoiceDate
+    coffee.OFC_ContainerNo  =  coffeeBatch.OFC_ContainerNo;
+    coffee.OFC_ContractNo  =  coffeeBatch.OFC_ContractNo;
+    coffee.OFC_ICO_No  = coffeeBatch.OFC_ICO_No;
+
+    // publish update
+    await assetRegistry.update(coffee);
+
+  } else {
+    throw new Error('the batch you specified does not exist!');
+  }
+
+
+}
+
+
