@@ -1,6 +1,6 @@
 {
   "name": "coffeetrackr",
-  "version": "0.0.2",
+  "version": "0.0.10",
   "description": "Demo",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/coffeetrackr.bna"

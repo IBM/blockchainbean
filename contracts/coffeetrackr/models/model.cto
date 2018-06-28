@@ -33,17 +33,22 @@ abstract participant Business {
   o Coffee[] batches
 }
 
+
+participant Regulator identified by regulatorId extends Business{
+  o String regulatorId
+}
+
 participant Grower identified by growerId extends Business {
   o Boolean isFairTrade
   o String growerId
 }
 
-participant Importer identified by importerId extends Business {
-     o String importerId
+participant Trader identified by traderId extends Business {
+     o String traderId
 }
 
-participant Regulator identified by regulatorId extends Business{
-  o String regulatorId
+participant Shipper identified by shipperId extends Business {
+     o String shipperId
 }
 
 participant Retailer identified by retailerId extends Business{
@@ -51,18 +56,97 @@ participant Retailer identified by retailerId extends Business{
 }
 
 asset Coffee identified by batchId {
+/**
+ * # Standard attributes
+ */
   o String batchId
   o Size size
   o CoffeeRoast roast
   o State batchState
+
+/**
+ * # ICO Certificate of Origin
+ */
+  o Double ICO_CertificateOfOriginId optional
+  o String ICO_ProducingCountry optional
+  o String ICO_CountryOfDestination optional
+  o DateTime ICO_DateOfExport optional
+  o Boolean ICO_Organic optional
+  o String ICO_IdentificationMark optional
+
+/**
+ * # Organic Farming Certiificate
+ */
+  o Double OFC_OrganicFarmingCertificateId optional
+  o Double OFC_InvoiceNo optional
+  o DateTime OFC_InvoiceDate optional
+  o String OFC_ContainerNo optional
+  o Double OFC_ContractNo optional
+  o String OFC_ICO_No optional
+
+/**
+ * # Packing List
+ */
+  o Double PL_PackingListId optional
+  o String PL_ICO_no optional
+  o Double PL_FDA_NO optional
+  o Double PL_Bill_of_Lading_No optional
+  o String PL_Container_No optional
+  o String PL_Seal_no optional
+
+
+/**
+ * # Bill Of Lading
+ */
+  o Double BOL_BillOfLadingId optional
+  o Double BOL_Booking_no optional
+  o String BOL_vessel optional
+  o Double BOL_voyage_no optional
+  o Double BOL_contract optional
+  o Double BOL_Cert_no optional
+  o String BOL_ICO_no optional
+
+
+/**
+ * # Product List (information from grower to roaster)
+ */
+  o Double PrL_ProductListingId optional
+  o String PrL_Grower optional
+  o String PrL_Variety optional
+  o String PrL_Harvest optional
+  o String PrL_Altitude optional
+  o String PrL_Soil optional
+  o String PrL_Process optional
+
+
+/**
+ * # Purchase Confirmation
+ */
+  o Double PC_PurchaseConfirmationId optional
+  o DateTime PC_Date optional
+  o Double PC_Order_id optional
+  o String PC_ICO_No optional
+  o Double PC_Invoice_No optional
+  o Double PC_RNY_FLO_ID optional
+  o Double PC_Brook_FLO_ID optional
+
   --> Business owner
 }
 
+
+
+asset cupCoffee identified by cupId {
+
+  o String cupId
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+  --> Coffee batchId
+
+}
+
 transaction transferCoffee {
-  --> Business newOwner
-  --> Business oldOwner
   o String batchId
-  o String newOwnerType
 }
 
 transaction addCoffee{
@@ -72,9 +156,66 @@ transaction addCoffee{
   --> Grower grower
 }
 
-event transferComplete {
+transaction regulateCoffee extends transferCoffee{
+  --> Regulator regulator
+  o Double ICO_CertificateOfOriginId
+  o String ICO_ProducingCountry
+  o String ICO_CountryOfDestination
+  o DateTime ICO_DateOfExport
+  o Boolean ICO_Organic
+  o String ICO_IdentificationMark
+}
+
+
+transaction certifyOrganic extends transferCoffee{
+  --> Regulator regulator
+  o Double OFC_OrganicFarmingCertificateId
+  o Double OFC_InvoiceNo  optional
+  o DateTime OFC_InvoiceDate optional
+  o String OFC_ContainerNo optional
+  o Double OFC_ContractNo optional
+  o String OFC_ICO_No optional
+}
+
+transaction shipCoffee extends transferCoffee{
+  --> Business grower
+  --> Business shipper
+  --> Business trader
+
+/**
+ * # Packing List
+ */
+  o Double PL_PackingListId optional
+  o String PL_ICO_no optional
+  o Double PL_FDA_NO optional
+  o Double PL_Bill_of_Lading_No optional
+  o String PL_Container_No optional
+  o String PL_Seal_no optional
+
+
+/**
+ * # Bill Of Lading
+ */
+  o Double BOL_BillOfLadingId optional
+  o Double BOL_Booking_no optional
+  o String BOL_vessel optional
+  o Double BOL_voyage_no optional
+  o Double BOL_contract optional
+  o Double BOL_Cert_no optional
+  o String BOL_ICO_no optional
+}
+
+event shippingComplete {
   o String batchId
-  --> Business oldOwner
-  --> Business newOwner
+  --> Business grower
+  --> Business shipper
+  --> Business trader
+  o String timeStamp
+}
+
+event regulationComplete {
+  o String batchId
+  --> Business owner
+  --> Regulator regulator
   o String timeStamp
 }
