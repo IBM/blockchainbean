@@ -1,28 +1,12 @@
 namespace org.ibm.coffee
 
-enum CoopBeans {
-  o BANKO_GROTITI
-}
-
-enum DrinkType {
-  o COLD
-  o NITRO
-  o ESPRESSO
-}
-
-enum Barista {
- o NICOLE
- o JOSH
-}
-
 //*********CUP***********//
 
 asset cupCoffee identified by cupId {
   o String cupId
-  --> Coffee batchId
-  o DrinkType drinkType
-  o Barista barista
-  o CoopBeans beanType
+  o String drinkType
+  o String barista
+  o String beanType
   o Double count
   o String lastPour
 }
@@ -30,10 +14,8 @@ asset cupCoffee identified by cupId {
 //*********TRANSACTIONS*POUR*CUP***********//
 
 transaction pourCup {
-  o DrinkType drinkType
-  o Barista barista
-  o CoopBeans beanType
-  --> Coffee batchId
+  o String cupId
+  o String timeStamp optional
 }
 
 //*********EVENTS*CUP***********//
@@ -41,10 +23,9 @@ transaction pourCup {
 
 event cupData {
   o String cupId
-  --> Coffee batchId
-  o DrinkType drinkType
-  o Barista barista
-  o CoopBeans beanType
+  o String drinkType
+  o String barista
+  o String beanType
   o Double count 
   o String lastPour
 }

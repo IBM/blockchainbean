@@ -13,49 +13,98 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+cupId: 
+the id of the cup, e.g., CJB02185 
+“C" stands for “Cold Drink” 
+“J” stands for “Josh” one of the baristas 
+“B” for the Banko Gotiti coop beans we will be using 
+"02185” is the cup ID (note all the cup ids will be UIDs 
+Full data set is TBD but this is what we currently understand to be the different things: 
+Data Value => Data Code 
+Banko Gotiti => B 
+Nicole => N 
+Josh => J 
+Cold => C 
+Expresso => E 
+Nitro => I 
+Input structure is: <DrinkType><Barista><BeanType><CupID> 
+timestamp: (optional)
+the time at which the cup was poured. Should default to “now” if this field is omitted 
+format YYYYMMDD-HH:MM (time should be in 24h format) 
+*/
 
 /**
  * Sample transaction processor function.
  * @param {org.ibm.coffee.pourCup} tx The send message instance.
  * @transaction
  */
+
+
+
 async function pourCup(newCoffee) {
   
-  if (newCoffee.batchId.length <= 0) {
+  if (newCoffee.cupId.length <= 0) {
     throw new Error('Please enter the batchId');
   }	
-	var count = 1;
-    var NS = 'org.ibm.coffee';
-    var cup = getFactory().newResource(NS, 'cupCoffee', Math.random().toString(36).substring(3));
-    cup.drinkType = newCoffee.drinkType;
-    cup.barista = newCoffee.barista;
-    cup.beanType = newCoffee.beanType;
-    cup.batchId = newCoffee.batchId;
   
-  	var dateStr = new Date();
-    dateStr = dateStr.toString();
-  	cup.lastPour = dateStr;
-  	cup.count = count;
-
-    const assetRegistry = await getAssetRegistry('org.ibm.coffee.cupCoffee');
-    await assetRegistry.add(cup);
+  var str = newCoffee.cupId;
+  var NS = 'org.ibm.coffee';
+  var cup = getFactory().newResource(NS, 'cupCoffee', newCoffee.cupId);
   
-  	var event = getFactory().newEvent('org.ibm.coffee', 'cupData');
-   
-    
-    event.cupId = cup.cupId;
-    event.batchId = cup.batchId;    
-    event.drinkType = cup.drinkType;
-    event.barista = cup.barista;
-    event.beanType = cup.beanType;
-    event.count = cup.count;
-    //get timestamp
+  // first character of input is the drink type
+  character = str.charAt(0)
+  if (character.toLowerCase() === 'c') {
+  	cup.drinkType = 'Cold Drink';
+  } else if (character.toLowerCase() === 'e') {
+  	cup.drinkType = 'Espresso';
+  } else {
+    cup.drinkType = 'Nitro';
+  }
+  
+  //second character is barista
+  character = str.charAt(1)
+  if (character.toLowerCase() === 'j') {
+  	cup.barista = 'Josh';
+  } else {
+    cup.barista = 'Nicole';
+  }
+  
+  //third character is coop
+  
+  character = str.charAt(2)
+  if (character.toLowerCase() === 'b') {
+  	cup.beanType = 'Banko Gotiti';
+  }
+  
+  
+  if (newCoffee.timeStamp == undefined) {
     var dateStr = new Date();
-    dateStr = dateStr.toString();
-    event.lastPour = dateStr;
+  	dateStr = dateStr.toString();
+  	cup.lastPour = dateStr;
+  } else {
+  	cup.lastPour = newCoffee.timeStamp;
+  }
+  
+  var count = 1 
+  cup.count = count;
 
-    //fire event
-    emit(event);
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.cupCoffee');
+  await assetRegistry.add(cup);
+
+  var event = getFactory().newEvent('org.ibm.coffee', 'cupData');
+
+  event.cupId = cup.cupId;
+  event.drinkType = cup.drinkType;
+  event.barista = cup.barista;
+  event.beanType = cup.beanType;
+  event.count = cup.count;
+  //get timestamp
+
+  event.lastPour = dateStr;
+
+  //fire event
+  emit(event);
   
 }
 
@@ -296,3 +345,4 @@ async function shipCoffee(coffeeBatch) {
     throw new Error('the batch you specified does not exist!');
   }
 }
+
