@@ -296,4 +296,3 @@ async function shipCoffee(coffeeBatch) {
     throw new Error('the batch you specified does not exist!');
   }
 }
-

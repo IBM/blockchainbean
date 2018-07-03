@@ -182,9 +182,6 @@ asset Coffee identified by batchId {
   --> Business owner
 }
 
-
-
-
 transaction transferCoffee {
   o String batchId
 }
