@@ -1,18 +1,18 @@
 /**
  * Script file for executing logic to track coffee on the supply chain.
  *//*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 /**
  * Transaction used when pouring a cup of coffee at the event. Will
@@ -26,50 +26,50 @@
 
 
 async function pourCup(newCoffee) {
-  
+
   if (newCoffee.cupId.length <= 0) {
     throw new Error('Please enter the batchId');
-  }	
-  
+  }
+
   var str = newCoffee.cupId;
   var NS = 'org.ibm.coffee';
   var cup = getFactory().newResource(NS, 'cupCoffee', newCoffee.cupId);
-  
+
   // first character of input is the drink type
   character = str.charAt(0)
   if (character.toLowerCase() === 'c') {
-  	cup.drinkType = 'Cold Drink';
+    cup.drinkType = 'Cold Drink';
   } else if (character.toLowerCase() === 'e') {
-  	cup.drinkType = 'Espresso';
+    cup.drinkType = 'Espresso';
   } else {
     cup.drinkType = 'Nitro';
   }
-  
+
   //second character is barista
   character = str.charAt(1)
   if (character.toLowerCase() === 'j') {
-  	cup.barista = 'Josh';
+    cup.barista = 'Josh';
   } else {
     cup.barista = 'Nicole';
   }
-  
+
   //third character is coop
-  
+
   character = str.charAt(2)
   if (character.toLowerCase() === 'b') {
-  	cup.beanType = 'Banko Gotiti';
+    cup.beanType = 'Banko Gotiti';
   }
-  
-  
+
+
   if (newCoffee.timeStamp == undefined) {
     var dateStr = new Date();
-  	dateStr = dateStr.toString();
-  	cup.lastPour = dateStr;
+    dateStr = dateStr.toString();
+    cup.lastPour = dateStr;
   } else {
-  	cup.lastPour = newCoffee.timeStamp;
+    cup.lastPour = newCoffee.timeStamp;
   }
-  
-  var count = 1 
+
+  var count = 1
   cup.count = count;
 
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.cupCoffee');
@@ -88,7 +88,7 @@ async function pourCup(newCoffee) {
 
   //fire event
   emit(event);
-  
+
 }
 
 /**
@@ -123,12 +123,12 @@ async function regulateCoffeeICO(coffeeBatch) {
   if (coffeeBatch.batchId.length <= 0) {
     throw new Error('Please enter the batchId');
   }
-  
+
 
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
 
   const exists = await assetRegistry.exists(coffeeBatch.batchId);
-  
+
   const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
 
 
@@ -152,7 +152,7 @@ async function regulateCoffeeICO(coffeeBatch) {
     coffee.ICO_DateOfExport = coffeeBatch.ICO_DateOfExport;
     coffee.ICO_Organic = coffeeBatch.regulateCoffeeICO_Organic;
     coffee.ICO_IdentificationMark = coffeeBatch.ICO_IdentificationMark;
-    
+
     //update ownership
     coffee.owner = coffeeBatch.regulator;
     coffee.batchState = 'REGULATION_TEST_PASSED'
@@ -180,13 +180,13 @@ async function certifyOrganic(coffeeBatch) {
   }
 
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
-    
+
   const coffeeExists = await assetRegistry.exists(coffeeBatch.batchId);
-  
+
   const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
 
-  
-  if (coffeeExists ) {
+
+  if (coffeeExists) {
     const coffee = await assetRegistry.get(coffeeBatch.batchId);
 
     // Create and emit a regulation event
@@ -202,12 +202,12 @@ async function certifyOrganic(coffeeBatch) {
     // Annotate coffee asset with certified data
     coffee.OFC_OrganicFarmingCertificateId = coffeeBatch.OFC_OrganicFarmingCertificateId;
     coffee.OFC_InvoiceNo = coffeeBatch.OFC_InvoiceNo;
-    coffee.OFC_InvoiceDate  = coffeeBatch.OFC_InvoiceDate
-    coffee.OFC_ContainerNo  =  coffeeBatch.OFC_ContainerNo;
-    coffee.OFC_ContractNo  =  coffeeBatch.OFC_ContractNo;
-    coffee.OFC_ICO_No  = coffeeBatch.OFC_ICO_No;
+    coffee.OFC_InvoiceDate = coffeeBatch.OFC_InvoiceDate
+    coffee.OFC_ContainerNo = coffeeBatch.OFC_ContainerNo;
+    coffee.OFC_ContractNo = coffeeBatch.OFC_ContractNo;
+    coffee.OFC_ICO_No = coffeeBatch.OFC_ICO_No;
     coffee.batchState = 'ORGANIC_CERTIFICATION_APPROVED'
-    
+
     //update ownership
     coffee.owner = coffeeBatch.regulator;
 
@@ -233,7 +233,7 @@ async function shipCoffee(coffeeBatch) {
   if (coffeeBatch.batchId.length <= 0) {
     throw new Error('Please enter the batchId');
   }
-  
+
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
   const exists = await assetRegistry.exists(coffeeBatch.batchId);
 
@@ -253,28 +253,28 @@ async function shipCoffee(coffeeBatch) {
     /**
      * # Packing List
      */
-    coffee.PL_PackingListId  = coffeeBatch.PL_PackingListId;
-    coffee.PL_ICO_no  = coffeeBatch.PL_ICO_no;
-    coffee.PL_FDA_NO  = coffeeBatch.PL_FDA_NO;
-    coffee.PL_Bill_of_Lading_No  = coffeeBatch.PL_Bill_of_Lading_No;
-    coffee.PL_Container_No  = coffeeBatch.PL_Container_No;
-    coffee.PL_Seal_no  = coffeeBatch.PL_Seal_no;
+    coffee.PL_PackingListId = coffeeBatch.PL_PackingListId;
+    coffee.PL_ICO_no = coffeeBatch.PL_ICO_no;
+    coffee.PL_FDA_NO = coffeeBatch.PL_FDA_NO;
+    coffee.PL_Bill_of_Lading_No = coffeeBatch.PL_Bill_of_Lading_No;
+    coffee.PL_Container_No = coffeeBatch.PL_Container_No;
+    coffee.PL_Seal_no = coffeeBatch.PL_Seal_no;
 
 
     /**
      * # Bill Of Lading
      */
-    coffee.BOL_BillOfLadingId  = coffeeBatch.BOL_BillOfLadingId;
-    coffee.BOL_Booking_no  = coffeeBatch.BOL_Booking_no;
-    coffee.BOL_vessel  = coffeeBatch.BOL_vessel;
+    coffee.BOL_BillOfLadingId = coffeeBatch.BOL_BillOfLadingId;
+    coffee.BOL_Booking_no = coffeeBatch.BOL_Booking_no;
+    coffee.BOL_vessel = coffeeBatch.BOL_vessel;
     coffee.BOL_voyage_no = coffeeBatch.BOL_voyage_no;
     coffee.BOL_contract = coffeeBatch.BOL_contract;
     coffee.BOL_Cert_no = coffeeBatch.BOL_Cert_no;
-    coffee.BOL_ICO_no  = coffeeBatch.BOL_ICO_no;
-    
+    coffee.BOL_ICO_no = coffeeBatch.BOL_ICO_no;
+
     coffee.batchState = 'IMPORTED';
-    
-    
+
+
     var participantRegistry = await getParticipantRegistry('org.ibm.coffee.Shipper');
     await participantRegistry.update(coffeeBatch.shipper);
     //update ownership
@@ -297,7 +297,7 @@ async function shipCoffee(coffeeBatch) {
  */
 async function purchaseCoffee(coffeeBatch) {
   // this one actually uses two documents, the packing list and BoL
-  
+
   if (coffeeBatch.batchId.length <= 0) {
     throw new Error('Please enter the batchId');
   }
@@ -315,7 +315,7 @@ async function purchaseCoffee(coffeeBatch) {
     coffee.PC_Invoice_No = coffeeBatch.PC_Invoice_No;
     coffee.PC_RNY_FLO_ID = coffeeBatch.PC_RNY_FLO_ID;
     coffee.PC_Brook_FLO_ID = coffeeBatch.PC_Brook_FLO_ID;
-    
+
 
 
     // Create and emit a regulation event
@@ -327,14 +327,14 @@ async function purchaseCoffee(coffeeBatch) {
     event.trader = coffeeBatch.trader;
     event.retailer = coffeeBatch.retailer;
     emit(event);
-    
+
     var participantRegistry = await getParticipantRegistry('org.ibm.coffee.Trader');
     await participantRegistry.update(coffeeBatch.trader);
     //update ownership
     coffee.owner = coffeeBatch.retailer;
     participantRegistry = await getParticipantRegistry('org.ibm.coffee.Retailer');
     await participantRegistry.update(coffeeBatch.retailer);
-    
+
     coffee.batchState = 'READY_FOR_SALE';
 
     // publish update
