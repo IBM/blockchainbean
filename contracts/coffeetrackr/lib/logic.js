@@ -1,5 +1,5 @@
 /**
- * New script file
+ * Script file for executing logic to track coffee on the supply chain.
  *//*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
-cupId: 
-the id of the cup, e.g., CJB02185 
-“C" stands for “Cold Drink” 
-“J” stands for “Josh” one of the baristas 
-“B” for the Banko Gotiti coop beans we will be using 
-"02185” is the cup ID (note all the cup ids will be UIDs 
-Full data set is TBD but this is what we currently understand to be the different things: 
-Data Value => Data Code 
-Banko Gotiti => B 
-Nicole => N 
-Josh => J 
-Cold => C 
-Expresso => E 
-Nitro => I 
-Input structure is: <DrinkType><Barista><BeanType><CupID> 
-timestamp: (optional)
-the time at which the cup was poured. Should default to “now” if this field is omitted 
-format YYYYMMDD-HH:MM (time should be in 24h format) 
-*/
 
 /**
- * Sample transaction processor function.
- * @param {org.ibm.coffee.pourCup} tx The send message instance.
+ * Transaction used when pouring a cup of coffee at the event. Will
+ * record who poured it, what time, what type of coffee, etc.
+ * Users then can use this cupId later to get more details from the
+ * blockchain about their beverage
+ * @param {org.ibm.coffee.pourCup} newCoffee - the input parameters from user
  * @transaction
  */
 
@@ -109,70 +92,9 @@ async function pourCup(newCoffee) {
 }
 
 /**
- * Sample transaction processor function.
- * @param {org.ibm.coffee.transferCoffee} tx The send message instance.
- * @transaction
- */
-async function transferCoffee(coffeeBatch) {
-
-  if (coffeeBatch.batchId.length <= 0) {
-    throw new Error('Please enter the batchId');
-  }
-
-  if (coffeeBatch.newOwner.length <= 0) {
-    throw new Error('Please enter the new owner');
-  }
-
-  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
-
-  const exists = await assetRegistry.exists(coffeeBatch.batchId);
-
-  if (exists) {
-    const coffee = await assetRegistry.get(coffeeBatch.batchId);
-
-    var event = getFactory().newEvent('org.ibm.coffee', 'transferComplete');
-    event.batchId = coffeeBatch.batchId;
-    var dateStr = new Date();
-    dateStr = dateStr.toString();
-    event.timeStamp = dateStr;
-    event.oldOwner = coffee.owner;
-    event.newOwner = coffeeBatch.newOwner;
-    emit(event);
-    coffeeBatch.oldOwner = coffee.owner;
-    coffee.owner = coffeeBatch.newOwner;
-    if(!coffeeBatch.newOwner.batches) {
-      coffeeBatch.newOwner.batches = [];
-    }
-    coffeeBatch.newOwner.batches.push(coffee);
-
-    if (coffeeBatch.newOwnerType.toLowerCase() == 'importer') {
-
-      const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Importer');
-      await participantRegistry.update(coffeeBatch.newOwner);
-      coffee.batchState = "IMPORTED";
-
-    } else if (coffeeBatch.newOwnerType.toLowerCase() == 'regulator') {
-      const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
-      await participantRegistry.update(coffeeBatch.newOwner);
-      coffee.batchState = "REGULATION_TEST_PASSED";
-    } else {
-      const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Retailer');
-      await participantRegistry.update(coffeeBatch.newOwner);
-      coffee.batchState = "READY_FOR_SALE";
-    }
-
-    await assetRegistry.update(coffee);
-
-
-  } else {
-    throw new Error('the batch you specified does not exist!');
-  }
-}
-
-
-/**
- * Sample transaction processor function.
- * @param {org.ibm.coffee.addCoffee} tx The send message instance.
+ * When a grower adds a batch of coffee to the blockchain.
+ * This creates the coffee asset automatically on the blockchain.
+ * @param {org.ibm.coffee.addCoffee} newCoffee - the new coffee that we create
  * @transaction
  */
 async function addCoffee(newCoffee) {
@@ -185,11 +107,6 @@ async function addCoffee(newCoffee) {
   coffee.owner = newCoffee.grower;
   coffee.batchState = newCoffee.batchState;
 
-  if(!newCoffee.grower.batches) {
-    newCoffee.grower.batches = [];
-  }
-
-  newCoffee.grower.batches.push(coffee);
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
   await assetRegistry.add(coffee);
   await participantRegistry.update(newCoffee.grower);
@@ -197,8 +114,8 @@ async function addCoffee(newCoffee) {
 
 
 /**
- * Regulate
- * @param {org.ibm.coffee.regulateCoffee} tx The send message instance.
+ * Regulate the coffee - send coffee to ICO for regulation
+ * @param {org.ibm.coffee.regulateCoffee} coffeeBatch - the batch we are regulating
  * @transaction
  */
 async function regulateCoffeeICO(coffeeBatch) {
@@ -206,10 +123,14 @@ async function regulateCoffeeICO(coffeeBatch) {
   if (coffeeBatch.batchId.length <= 0) {
     throw new Error('Please enter the batchId');
   }
+  
 
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
 
   const exists = await assetRegistry.exists(coffeeBatch.batchId);
+  
+  const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
+
 
   if (exists) {
     const coffee = await assetRegistry.get(coffeeBatch.batchId);
@@ -220,7 +141,7 @@ async function regulateCoffeeICO(coffeeBatch) {
     var dateStr = new Date();
     dateStr = dateStr.toString();
     event.timeStamp = dateStr;
-    event.owner = coffee.owner;
+    event.owner = coffeeBatch.regulator;
     event.regulator = coffeeBatch.regulator;
     emit(event);
 
@@ -231,9 +152,15 @@ async function regulateCoffeeICO(coffeeBatch) {
     coffee.ICO_DateOfExport = coffeeBatch.ICO_DateOfExport;
     coffee.ICO_Organic = coffeeBatch.regulateCoffeeICO_Organic;
     coffee.ICO_IdentificationMark = coffeeBatch.ICO_IdentificationMark;
+    
+    //update ownership
+    coffee.owner = coffeeBatch.regulator;
+    coffee.batchState = 'REGULATION_TEST_PASSED'
 
     // publish update
     await assetRegistry.update(coffee);
+    await participantRegistry.update(coffeeBatch.regulator);
+
 
   } else {
     throw new Error('the batch you specified does not exist!');
@@ -243,7 +170,7 @@ async function regulateCoffeeICO(coffeeBatch) {
 
 /**
  * Certify the coffee is organic
- * @param {org.ibm.coffee.certifyOrganic} tx The send message instance.
+ * @param {org.ibm.coffee.certifyOrganic} coffeeBatch - the batch we are certifying
  * @transaction
  */
 async function certifyOrganic(coffeeBatch) {
@@ -253,19 +180,22 @@ async function certifyOrganic(coffeeBatch) {
   }
 
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+    
+  const coffeeExists = await assetRegistry.exists(coffeeBatch.batchId);
+  
+  const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
 
-  const exists = await assetRegistry.exists(coffeeBatch.batchId);
-
-  if (exists) {
+  
+  if (coffeeExists ) {
     const coffee = await assetRegistry.get(coffeeBatch.batchId);
 
     // Create and emit a regulation event
-    var event = getFactory().newEvent('org.ibm.coffee', 'regulationComplete');
+    var event = getFactory().newEvent('org.ibm.coffee', 'organicCertification');
     event.batchId = coffeeBatch.batchId;
     var dateStr = new Date();
     dateStr = dateStr.toString();
     event.timeStamp = dateStr;
-    event.owner = coffee.owner;
+    event.owner = coffeeBatch.regulator;
     event.regulator = coffeeBatch.regulator;
     emit(event);
 
@@ -276,9 +206,15 @@ async function certifyOrganic(coffeeBatch) {
     coffee.OFC_ContainerNo  =  coffeeBatch.OFC_ContainerNo;
     coffee.OFC_ContractNo  =  coffeeBatch.OFC_ContractNo;
     coffee.OFC_ICO_No  = coffeeBatch.OFC_ICO_No;
+    coffee.batchState = 'ORGANIC_CERTIFICATION_APPROVED'
+    
+    //update ownership
+    coffee.owner = coffeeBatch.regulator;
 
     // publish update
+    await participantRegistry.update(coffeeBatch.regulator);
     await assetRegistry.update(coffee);
+
 
   } else {
     throw new Error('the batch you specified does not exist!');
@@ -288,7 +224,7 @@ async function certifyOrganic(coffeeBatch) {
 
 /**
  * Ship the coffee
- * @param {org.ibm.coffee.shipCoffee} tx The send message instance.
+ * @param {org.ibm.coffee.shipCoffee} coffeeBatch - the batch we are shipping
  * @transaction
  */
 async function shipCoffee(coffeeBatch) {
@@ -297,9 +233,8 @@ async function shipCoffee(coffeeBatch) {
   if (coffeeBatch.batchId.length <= 0) {
     throw new Error('Please enter the batchId');
   }
-
+  
   const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
-
   const exists = await assetRegistry.exists(coffeeBatch.batchId);
 
   if (exists) {
@@ -311,9 +246,8 @@ async function shipCoffee(coffeeBatch) {
     var dateStr = new Date();
     dateStr = dateStr.toString();
     event.timeStamp = dateStr;
-    event.grower = coffeeBatch.grower;
     event.shipper = coffeeBatch.shipper;
-    event.trader = coffeeBatch.trader;
+    event.owner = coffeeBatch.trader;
     emit(event);
 
     /**
@@ -337,6 +271,16 @@ async function shipCoffee(coffeeBatch) {
     coffee.BOL_contract = coffeeBatch.BOL_contract;
     coffee.BOL_Cert_no = coffeeBatch.BOL_Cert_no;
     coffee.BOL_ICO_no  = coffeeBatch.BOL_ICO_no;
+    
+    coffee.batchState = 'IMPORTED';
+    
+    
+    var participantRegistry = await getParticipantRegistry('org.ibm.coffee.Shipper');
+    await participantRegistry.update(coffeeBatch.shipper);
+    //update ownership
+    coffee.owner = coffeeBatch.trader;
+    participantRegistry = await getParticipantRegistry('org.ibm.coffee.Trader');
+    await participantRegistry.update(coffeeBatch.trader);
 
     // publish update
     await assetRegistry.update(coffee);
@@ -345,4 +289,60 @@ async function shipCoffee(coffeeBatch) {
     throw new Error('the batch you specified does not exist!');
   }
 }
+
+/**
+ * Purchase coffee from the importer / warehouser. This is Royal coffee for our use case.
+ * @param {org.ibm.coffee.purchaseCoffee} coffeeBatch - the batch we are purchasing
+ * @transaction
+ */
+async function purchaseCoffee(coffeeBatch) {
+  // this one actually uses two documents, the packing list and BoL
+  
+  if (coffeeBatch.batchId.length <= 0) {
+    throw new Error('Please enter the batchId');
+  }
+
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+
+  const exists = await assetRegistry.exists(coffeeBatch.batchId);
+
+  if (exists) {
+    const coffee = await assetRegistry.get(coffeeBatch.batchId);
+
+    coffee.PC_PurchaseConfirmationId = coffeeBatch.PC_PurchaseConfirmationId;
+    coffee.PC_Order_id = coffeeBatch.PC_Order_id;
+    coffee.PC_ICO_No = coffeeBatch.PC_ICO_No;
+    coffee.PC_Invoice_No = coffeeBatch.PC_Invoice_No;
+    coffee.PC_RNY_FLO_ID = coffeeBatch.PC_RNY_FLO_ID;
+    coffee.PC_Brook_FLO_ID = coffeeBatch.PC_Brook_FLO_ID;
+    
+
+
+    // Create and emit a regulation event
+    var event = getFactory().newEvent('org.ibm.coffee', 'purchaseComplete');
+    event.batchId = coffeeBatch.batchId;
+    var dateStr = new Date();
+    dateStr = dateStr.toString();
+    event.timeStamp = dateStr;
+    event.trader = coffeeBatch.trader;
+    event.retailer = coffeeBatch.retailer;
+    emit(event);
+    
+    var participantRegistry = await getParticipantRegistry('org.ibm.coffee.Trader');
+    await participantRegistry.update(coffeeBatch.trader);
+    //update ownership
+    coffee.owner = coffeeBatch.retailer;
+    participantRegistry = await getParticipantRegistry('org.ibm.coffee.Retailer');
+    await participantRegistry.update(coffeeBatch.retailer);
+    
+    coffee.batchState = 'READY_FOR_SALE';
+
+    // publish update
+    await assetRegistry.update(coffee);
+
+  } else {
+    throw new Error('the batch you specified does not exist!');
+  }
+}
+
 
