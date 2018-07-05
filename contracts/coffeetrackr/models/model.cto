@@ -38,7 +38,6 @@ concept Address {
 abstract participant Business {
   o String organization
   o Address address
-  o Double balance
 }
 
 participant Regulator identified by regulatorId extends Business{
