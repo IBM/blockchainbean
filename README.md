@@ -1,93 +1,54 @@
-# blockchain-starter-kit
+<!-- [![Build Status](https://travis-ci.org/IBM/watson-second-opinion.svg?branch=master)](https://travis-ci.org/IBM/watson-second-opinion) -->
 
 ⚠️⚠️⚠️⚠️⚠️WIP⚠️⚠️⚠️⚠️⚠️
 A project to track coffee while it makes it's way through the supply chain. Below is a description of how to get started testing the network.
 
-1. [Create participants](#1-create-participants)
-2. [Create assets (coffee)](#2-create-assets)
-3. [Transfer assets (coffee)](#3-transfer-assets)
+# Create a fair trade supply network with Hyperledger Composer and IBM Blockchain Starter Plan
 
-## 1. Create participants 
+In this Code Pattern, we will create a blockchain app that increases visibility and efficiency in the supply chain of a coffee retailer. The private keys and credentials of the blockchain application will be stored Cloudant database. We will use different transactions to show different possible actions for the different participants in the supply chain. This sample application will record all transactions on the IBM Blockchain Starter Kit, and enable a coffee retailer to ensure the customer that their coffee is organic and fair-trade. The Code Pattern can be useful to developers that are looking into learning more about creating applications that mimic a food trust supply chain with Hyperledger Composer.
 
+When the reader has completed this Code Pattern, they will understand how to:
 
-To test the network, first create (POST) a 'Grower' participant with the following json:
+* Interact with IBM Blockchain Starter Kit
+* Build a blockchain back-end using Hyperledger Composer
+* Create and use Cloudant NoSQL Database
+* Deploy a Cloud Foundry application that writes to the ledger
 
-`
-{
-  "$class": "org.ibm.coffee.Grower",
-  "isFairTrade": false,
-  "growerId": "growerA",
-  "organization": "IBM",
-  "address": {
-    "$class": "org.ibm.coffee.Address",
-    "country": ""
-  },
-  "balance": 0,
-  "batches": []
-}
-`
+<!--Remember to dump an image in this path-->
+<!-- ![Architecture](/docs/app-architecture.png) -->
 
-Then create (POST) a 'Importer' participant with the following json:
+## Flow
+1. The user deploys the app in IBM Cloud. The user submits transactions.
+2. The transaction is subbmitted to the ordering service.
+3. When the transaction conforms to the business logic, the data is written to the ledger.
+4. The another block is added to our chain on the IBM Blockchain Starter Kit for the specific channel.
 
-`{
-  "$class": "org.ibm.coffee.Importer",
-  "importerId": "importerA",
-  "organization": "Oracle",
-  "address": {
-    "$class": "org.ibm.coffee.Address",
-    "country": ""
-  },
-  "balance": 0,
-  "batches": []
-}`
+## Included components
+* [IBM Blockchain Starter Kit](https://www.ibm.com/watson/services/natural-language-understanding/):  Create a blockchain using ....
+* [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
 
-## 2. Create assets
+## Featured technologies
+* [Blockchain](https://nodejs.org/): An open-source JavaScript run-time environment for executing server-side JavaScript code.
+* [Databases](https://en.wikipedia.org/wiki/IBM_Information_Management_System#.22Full_Function.22_databases): Repository for storing and managing collections of data.
+* [Cloud](https://www.ibm.com/developerworks/learn/cloud/): Accessing computer and information technology resources through the Internet.
 
+## Watch the Video
 
-Now that we have a grower and a importer, we can add a batch of coffee. POST an 'addCoffee' transaction, and add the following json: 
+<!-- [![](docs/youtubePicture.png)](https://www.youtube.com/watch?v=wwNAEvbxd54&list=PLVztKpIRxvQXhHlMQttCfYZrDN8aELnzP&index=1&t=1s) -->
 
-`{
-  "$class": "org.ibm.coffee.addCoffee",
-  "size": "SMALL",
-  "roast": "LIGHT",
-  "batchState": "READY_FOR_DISTRIBUTION",
-  "batchId": "9mf2sg8cd",
-  "grower": "resource:org.ibm.coffee.Grower#9243"
-}`
+# Steps
 
-Next, let's grab the batchId by doing a GET on the coffee asset: 9mf2sg8cd
+Use the ``Deploy to IBM Cloud`` button **OR** create the services and run locally.
 
-## 3. Transfer assets
+## Deploy to IBM Cloud
+If you do not have an IBM Cloud account yet, you will need to create one [here](https://ibm.biz/BdjLxy).
+
+<!-- [![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-second-opinion) -->
+
+# Learn more
+
+<!-- * **Blockchain Code Patterns**: Enjoyed this Code Pattern? Check out our other [Node.js Code Patterns](https://developer.ibm.com/code/technologies/node-js/) -->
 
 
-Next, let's transfer the batch '9mf2sg8cd' from the grower to the importer. POST a 'transferCoffee' transaction with the following json:
-
-`{
-  "$class": "org.ibm.coffee.transferCoffee",
-  "newOwner": "resource:org.ibm.coffee.Importer#importerA",
-  "oldOwner": "resource:org.ibm.coffee.Grower#growerA",
-  "batchId": "9mf2sg8cd",
-  "newOwnerType": "importer"
-}`
-
-Cool. Now the coffee's owner is changed to importerA. 
-
-Let's query for all of the transactions associated with batch '9mf2sg8cd'.
-
-Let's do a GET query for 'query/getBatchHistory' and for the batchId fill in '9mf2sg8cd'.
-
-You should see something like this: 
-
- `{
-    "$class": "org.ibm.coffee.transferCoffee",
-    "newOwner": "resource:org.ibm.coffee.Importer#importerA",
-    "oldOwner": "resource:org.ibm.coffee.Grower#growerA",
-    "batchId": "9mf2sg8cd",
-    "newOwnerType": "importer",
-    "transactionId": "9587a741f7a483d9b006f97758d75004c1fa64b8d8e783b2e9017f2d1a465783",
-    "timestamp": "2018-05-25T00:19:27.873Z"
-  }`
-  
-  Cool. Now you can imagine that when we create a regulator and a retailer, and we transfer the coffee to them, the last query would have 3 transactions instead, showing that the coffee has passed through not only the importer, but the regulator and reatailer as well.
-  
-  *********************** WIP **********************************
+# License
+[Apache 2.0](LICENSE)
