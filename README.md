@@ -1,7 +1,4 @@
-<!-- [![Build Status](https://travis-ci.org/IBM/watson-second-opinion.svg?branch=master)](https://travis-ci.org/IBM/watson-second-opinion) -->
-
-⚠️⚠️⚠️⚠️⚠️WIP⚠️⚠️⚠️⚠️⚠️
-A project to track coffee while it makes it's way through the supply chain. Below is a description of how to get started testing the network.
+[![Build Status](https://travis-ci.org/IBM/blockchainbean.svg?branch=master)](https://travis-ci.org/IBM/blockchainbean)
 
 # Create a fair trade supply network with Hyperledger Composer and IBM Blockchain Starter Plan
 
