@@ -2,7 +2,7 @@
 
 # Create a fair trade supply network with Hyperledger Composer and IBM Blockchain Starter Plan
 
-In this Code Pattern, we will create a blockchain app that increases visibility and efficiency in the supply chain of a coffee retailer. The private keys and credentials of the blockchain application will be stored Cloudant database. We will use different transactions to show different possible actions for the different participants in the supply chain. This sample application will record all transactions on the IBM Blockchain Starter Kit, and enable a coffee retailer to ensure the customer that their coffee is organic and fair-trade. The Code Pattern can be useful to developers that are looking into learning more about creating applications that mimic a food trust supply chain with Hyperledger Composer.
+In this Code Pattern, we will create a blockchain app that increases visibility and efficiency in the supply chain of a coffee retailer. The private keys and credentials of the blockchain application will be stored on a Cloudant database. We will use different transactions to show different possible actions for the different participants in the supply chain. This sample application will record all transactions on the IBM Blockchain Starter Kit, and enable a coffee retailer to ensure the customer that their coffee is organic and fair-trade. The Code Pattern can be useful to developers that are looking into learning more about creating applications that mimic a food trust supply chain with Hyperledger Composer.
 
 When the reader has completed this Code Pattern, they will understand how to:
 
@@ -21,7 +21,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 4. The another block is added to our chain on the IBM Blockchain Starter Kit for the specific channel.
 
 ## Included components
-* [IBM Blockchain Starter Kit](https://www.ibm.com/watson/services/natural-language-understanding/):  Create a blockchain using ....
+* [IBM Blockchain Starter Kit](https://www.ibm.com/watson/services/natural-language-understanding/): Create a blockchain using ....
 * [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
 
 ## Featured technologies
