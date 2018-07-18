@@ -1,0 +1,297 @@
+namespace org.ibm.coffee
+
+/**
+ * # enums + concepts 
+ */
+
+enum CoffeeRoast {
+  o LIGHT
+  o MEDIUM
+  o DARK
+}
+
+enum Size {
+  o SMALL
+  o MEDIUM
+  o LARGE
+}
+
+enum State {
+  o READY_FOR_DISTRIBUTION
+  o ORGANIC_CERTIFICATION_APPROVED
+  o REGULATION_TEST_PASSED
+  o IMPORTED
+  o READY_FOR_SALE
+}
+
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+concept Investment {
+  o String title 
+  o Double amount
+  o String additionalDescription optional
+}
+
+concept Condition {
+  o Boolean condensation 
+  o Boolean holeInContainer 
+}
+
+/**
+ * # Participants
+ */
+
+abstract participant Business {
+  o String organization
+  o Address address
+}
+
+participant Regulator identified by regulatorId extends Business{
+  o String regulatorId
+}
+
+participant Grower identified by growerId extends Business {
+  o Boolean isFairTrade
+  o String growerId
+}
+
+participant Trader identified by traderId extends Business {
+     o String traderId
+}
+
+participant Shipper identified by shipperId extends Business {
+     o String shipperId
+}
+
+participant Retailer identified by retailerId extends Business{
+  o String retailerId
+}
+
+/**
+ * # Assets
+ */
+
+asset cupCoffee identified by cupId {
+  o String cupId
+  o String drinkType
+  o String barista
+  o String beanType
+  o Double count
+  o String lastPour
+}
+
+asset Coffee identified by batchId {
+/**
+ * # Standard attributes
+ */
+  o String batchId
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+
+/**
+ * # Fair trade info
+ */
+  o String reportName optional
+  o String organizationDescription optional
+  o Double reportYear optional
+  o String fairtradePremiumInvested optional
+  o String investmentTitle1 optional
+  o String investmentAmount1 optional
+  o String investmentTitle2 optional
+  o String investmentAmount2 optional
+  o String investmentTitle3 optional
+  o String investmentAmount3 optional
+ /**
+ * # Packing List
+ */
+  o String PL_Invoice_no optional
+  o DateTime PL_IssueDate optional
+  o String PL_ICO_no optional
+  o String PL_ICO_Lot optional
+  o String PL_FDA_NO optional
+  o String PL_Bill_of_Lading_No optional
+  o String PL_LoadedVessel optional
+  o String PL_VesselVoyage_No optional
+  o String PL_Container_No optional
+  o String PL_Seal_no optional
+  o String PL_timestamp optional
+
+  /**
+  * # weight tally details
+  */
+  o DateTime dateStripped optional
+  o String marks optional
+  o Double bagsExpected optional
+  o Condition condition optional
+  o Boolean insectActivity optional
+
+  /**
+  * # cupping details
+  */
+  o DateTime date optional
+  o String cupper optional
+  o Double aroma optional
+  o Double flavor optional
+  o Double afterTaste optional
+  o Double acidity optional
+  o Double body optional
+  o Double finalScore optional
+
+  --> Business owner
+}
+
+/**
+* # Transactions
+*/
+
+transaction addCoffee{
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+  --> Grower grower
+}
+
+transaction pourCup {
+  o String cupId
+  o String timeStamp optional
+}
+
+abstract transaction transferCoffee {
+  o String batchId
+}
+
+transaction submitFairTradeData extends transferCoffee{
+  o String reportName 
+  o String organizationDescription optional
+  o Double reportYear optional
+  o String fairtradePremiumInvested optional
+  o String investmentTitle1 optional
+  o String investmentAmount1 optional
+  o String investmentTitle2 optional
+  o String investmentAmount2 optional
+  o String investmentTitle3 optional
+  o String investmentAmount3 optional
+}
+
+transaction submitPackingList extends transferCoffee{
+  --> Business grower
+  --> Business trader
+  
+  /**
+ * # Purchase Confirmation
+ */
+  o String PL_Invoice_no 
+  o DateTime PL_IssueDate optional
+  o String PL_ICO_no optional
+  o String PL_ICO_Lot optional
+  o String PL_FDA_NO optional
+  o String PL_Bill_of_Lading_No optional
+  o String PL_LoadedVessel optional
+  o String PL_VesselVoyage_No optional
+  o String PL_Container_No optional
+  o String PL_Seal_no optional
+  o String PL_timestamp optional
+}
+
+transaction submitInboundWeightTally extends transferCoffee{
+  --> Coffee coffeeBatch  
+  /**
+  * # weight tally details
+  */
+  o DateTime dateStripped optional
+  o String marks optional
+  o Double bagsExpected optional
+  o Condition condition
+  o Boolean insectActivity
+}
+
+transaction submitCupping extends transferCoffee{
+  --> Coffee coffeeBatch  
+
+  /**
+  * # roast details
+  */
+  o DateTime date 
+  o String cupper 
+  o Double aroma optional
+  o Double flavor optional
+  o Double afterTaste optional
+  o Double acidity optional
+  o Double body optional
+  o Double finalScore optional
+}
+
+/**
+* # events
+*/
+
+event getPackingList {
+  --> Business grower
+  --> Business consignee
+  o String PL_Invoice_no 
+  o DateTime PL_IssueDate optional
+  o String PL_ICO_no optional
+  o String PL_ICO_Lot optional
+  o String PL_FDA_NO optional
+  o String PL_Bill_of_Lading_No optional
+  o String PL_LoadedVessel optional
+  o String PL_VesselVoyage_No optional
+  o String PL_Container_No optional
+  o String PL_Seal_no optional
+  o String PL_timestamp
+  o String batchId
+}
+
+event getFairTradeData {
+  o String reportName optional
+  o String organizationDescription optional
+  o Double reportYear optional
+  o String fairtradePremiumInvested optional
+  o String investmentTitle1 optional
+  o String investmentAmount1 optional
+  o String investmentTitle2 optional
+  o String investmentAmount2 optional
+  o String investmentTitle3 optional
+  o String investmentAmount3 optional
+  o String batchId
+}
+
+event getInboundWeightTally {
+  o DateTime dateStripped optional
+  o String marks optional
+  o Double bagsExpected optional
+  o Condition condition
+  o Boolean insectActivity
+  o String batchId
+  o String timeStamp
+  o Coffee asset
+}
+
+event getCupping {
+  o DateTime date 
+  o String cupper 
+  o Double aroma optional
+  o Double flavor optional
+  o Double afterTaste optional
+  o Double acidity optional
+  o Double body optional
+  o Double finalScore optional
+  o String batchId
+  o String timeStamp
+  o Coffee asset
+}
+
+event cupData {
+  o String cupId
+  o String drinkType
+  o String barista
+  o String beanType
+  o Double count 
+  o String lastPour
+}
