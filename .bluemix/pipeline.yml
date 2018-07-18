@@ -7,10 +7,6 @@ stages:
     service: ${REPO}
   triggers:
   - type: commit
-  properties:
-  - name: BLOCKCHAIN_EXISTING_SERVICE_INSTANCE
-    value: '{{sin}}'
-    type: text
   jobs:
   - name: Build
     type: builder
@@ -24,6 +20,13 @@ stages:
     job: Build
   triggers:
   - type: stage
+  properties:
+  - name: BLOCKCHAIN_SERVICE_INSTANCE
+    value: ${BLOCKCHAIN_SERVICE_INSTANCE}
+    type: text
+  - name: CLOUDANT_SERVICE_INSTANCE
+    value: ${CLOUDANT_SERVICE_INSTANCE}
+    type: text
   jobs:
   - name: Deploy
     type: deployer

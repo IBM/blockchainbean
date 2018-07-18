@@ -7,7 +7,8 @@
   "properties": {
     "deploy-region": {
       "description": "The bluemix region",
-      "type": "string"
+      "type": "string",
+      "pattern": "^(ibm:yp:us-south|ibm:ys1:us-south)$"
     },
     "deploy-organization": {
       "description": "The bluemix org",
@@ -16,31 +17,26 @@
     "deploy-space": {
       "description": "The bluemix space",
       "type": "string"
+    },
+    "blockchain-service-instance": {
+      "description": "The Blockchain service. This service will be created if it does not already exist.",
+      "type": "string"
+    },
+    "cloudant-service-instance": {
+      "description": "The Cloudant NoSQL DB that will be used to store Business Network Cards. This service will be created if it does not already exist.",
+      "type": "string"
     }
   },
   "required": [
     "deploy-region",
     "deploy-organization",
-    "deploy-space"
+    "deploy-space",
+    "blockchain-service-instance",
+    "cloudant-service-instance"
   ],
   "form": [{
       "type": "validator",
       "url": "/devops/setup/bm-helper/helper.html"
-    },
-    {
-      "type": "table",
-      "columnCount": 1,
-      "widths": [ "100%" ],
-      "items": [
-        {
-          "type": "label",
-          "title": "Cloud Foundry and OpenWhisk"
-        },
-        {
-          "type": "label",
-          "title": "The toolchain will deploy the Fibonacci service as a Cloud Foundry application with a random route and as an OpenWhisk action. The action will also be exposed as an HTTP endpoint. Specify the space where the application and the action will be deployed."
-        }
-      ]
     },
     {
       "type": "table",
@@ -49,23 +45,25 @@
       "items": [
         {
           "type": "label",
-          "title": "Region (only US South is supported)"
+          "title": "**Region:** (only US South is supported)"
         },
         {
           "type": "label",
-          "title": "Organization"
+          "title": "**Organization:**"
         },
         {
           "type": "label",
-          "title": "Space"
+          "title": "**Space:**"
         },
         {
           "type": "select",
-          "key": "deploy-region"
+          "key": "deploy-region",
+          "readonly": true
         },
         {
           "type": "select",
-          "key": "deploy-organization"
+          "key": "deploy-organization",
+          "readonly": false
         },
         {
           "type": "select",
@@ -73,6 +71,18 @@
           "readonly": false
         }
       ]
+    },
+    {
+      "type": "text",
+      "title": "Blockchain service name",
+      "key": "blockchain-service-instance",
+      "readonly": false
+    },
+    {
+      "type": "text",
+      "title": "Cloudant NoSQL DB service name",
+      "key": "cloudant-service-instance",
+      "readonly": false
     }
   ]
 }
