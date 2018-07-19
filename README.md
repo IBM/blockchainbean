@@ -21,7 +21,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 4. A block is appended to our chain on the IBM Blockchain Starter Kit for the specific channel.
 
 ## Included components
-* [IBM Blockchain Starter Kit](https://www.ibm.com/watson/services/natural-language-understanding/): Create a blockchain using ....
+* [IBM Blockchain Starter Kit](https://console.bluemix.net/catalog/services/blockchain): Use the IBM Blockchain Platform to simplify the developmental, governmental, and operational aspects of creating a blockchain solution.
 * [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
 
 ## Featured technologies
