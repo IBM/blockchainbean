@@ -1,0 +1,23 @@
+/**
+ * New query file
+ */
+query queryCoffee {
+  description: "get history on a particular batch identified by batchId"
+  statement:
+      SELECT org.ibm.coffee.Coffee
+  		  WHERE (batchId == _$batchId)
+}
+
+query getBatchHistory { 
+  description: "see all of the participants that have worked with a particular batch" 
+  statement: 
+  		SELECT org.ibm.coffee.transferCoffee
+  			WHERE (batchId == _$batchId ) 
+}
+
+query getCupData { 
+  description: "see all of the participants that have worked with a particular batch" 
+  statement: 
+  		SELECT org.ibm.coffee.cupCoffee
+  			WHERE (cupId == _$CupId ) 
+}
