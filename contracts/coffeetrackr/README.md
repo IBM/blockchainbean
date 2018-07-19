@@ -1,3 +1,0 @@
-# coffeetrackr
-
-Demo
