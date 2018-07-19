@@ -18,7 +18,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 1. The user deploys the app in IBM Cloud. The user submits transactions.
 2. The transaction is subbmitted to the ordering service.
 3. When the transaction conforms to the business logic, the data is written to the ledger.
-4. The another block is added to our chain on the IBM Blockchain Starter Kit for the specific channel.
+4. A block is appended to our chain on the IBM Blockchain Starter Kit for the specific channel.
 
 ## Included components
 * [IBM Blockchain Starter Kit](https://www.ibm.com/watson/services/natural-language-understanding/): Create a blockchain using ....
