@@ -12,7 +12,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 * Deploy a Cloud Foundry application that writes to the ledger
 
 <!--Remember to dump an image in this path-->
-<!-- ![Architecture](/docs/app-architecture.png) -->
+![Architecture](/docs/app-architecture.png)
 
 ## Flow
 1. The user deploys the app in IBM Cloud. The user submits transactions.
