@@ -41,7 +41,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 # Steps
 
-<!-- In this code pattern, we will use the blockchain-starter-kit repository: https://github.com/sstone1/blockchain-starter-kit to
+In this code pattern, we will use the blockchain-starter-kit repository: https://github.com/sstone1/blockchain-starter-kit to
 deploy our smart contract to the cloud. This repo will help us create a DevOps toolchain to automate deployment.
 
 1. Go to https://github.com/sstone1/blockchain-starter-kit
@@ -89,7 +89,33 @@ Namespace: `org.ibm.coffee`
 $ git add .
 $ git commit -m "first commit"
 $ git push origin master
-``` -->
+```
+
+17. Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
+
+18. Find the application starting with composer-rest-server<your-smart-contract-name-here>. Click it and then click `visit App url`.
+
+
+19. Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
+```{ 
+  "$class": "org.ibm.coffee.pourCup",
+  "cupId": "CJB0119" 
+}```
+
+![blockchainService](/docs/blockchainService.png)
+20. Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
+
+![blockchainService](/docs/getCupCoffee.png)
+21. Let's go back to our Cloud foundry app. Let's click on GET /cupCoffee. Note that the `cupId` that you see there. Now, let's go to our queries. Click on `Query` and GET `getCupData`. Enter in your cupId from above. You should see the relevant details registered from your post call in step 19 above. Nice job! You successfully queried the blockchain.
+
+22. Using these API endpoints you can start building web and mobile applications that call these endpoints to perform CRUD operations on thee blockchain. 
+
+Thank you for reading, and go build something awesome!
+
+
+
+
+
 
 <!-- ## Deploy to IBM Cloud -->
 
