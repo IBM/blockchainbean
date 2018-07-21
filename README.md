@@ -75,10 +75,10 @@ Namespace: `org.ibm.coffee`
 
  10. Rename `models/ibm.coffee.cto` to `model.cto`
  
- 11. Let's copy and of the code from the following URLs: the model file, `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto`, the logic file,
- `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/lib/logic.js`, 
- and the permissions file: `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/permissions.acl`. 
-12. Create a new file called `queries.qry`, and paste in the code from here: `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/queries.qry`. 
+ 11. Let's copy and of the code from the following URLs: the model file, https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto, the logic file,
+ https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/lib/logic.js, 
+ and the permissions file: https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/permissions.acl. 
+12. Create a new file called `queries.qry`, and paste in the code from here: https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/queries.qry. 
 
 13. Comment everything inside the `test/logic.js` file.
 14. Same with the `features/support/index.js` file.
