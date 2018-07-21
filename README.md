@@ -98,7 +98,7 @@ $ git push origin master
  ![packageFile](/docs/cloudFoundry.png)
 18. Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`.
 
-
+![pourCup](/docs/pourCup.png)
 19. Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
 ```{ 
   "$class": "org.ibm.coffee.pourCup",
