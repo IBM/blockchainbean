@@ -9,16 +9,17 @@ When the reader has completed this Code Pattern, they will understand how to:
 * Interact with IBM Blockchain Starter Kit
 * Build a blockchain back-end using Hyperledger Composer
 * Create and use Cloudant NoSQL Database
-* Deploy a Cloud Foundry application that writes to the ledger
+* Deploy a Cloud Foundry application that writes and queries to the ledger
 
 <!--Remember to dump an image in this path-->
 ![Architecture](/docs/app-architecture.png)
 
 ## Flow
 1. The user deploys the app in IBM Cloud. The user submits transactions.
-2. The transaction is subbmitted to the ordering service.
+2. The transaction is submitted to the blockchain.
 3. When the transaction conforms to the business logic, the data is written to the ledger.
 4. A block is appended to our chain on the IBM Blockchain Starter Kit for the specific channel.
+5. The user can query the blockchain for a particular asset, using the asset's unique id.
 
 ## Included components
 * [IBM Blockchain Starter Kit](https://console.bluemix.net/catalog/services/blockchain): Use the IBM Blockchain Platform to simplify the developmental, governmental, and operational aspects of creating a blockchain solution.
@@ -29,23 +30,83 @@ When the reader has completed this Code Pattern, they will understand how to:
 * [Databases](https://en.wikipedia.org/wiki/IBM_Information_Management_System#.22Full_Function.22_databases): Repository for storing and managing collections of data.
 * [Cloud](https://www.ibm.com/developerworks/learn/cloud/): Accessing computer and information technology resources through the Internet.
 
-## Watch the Video
+<!-- ## Watch the Video -->
 
 <!-- [![](docs/youtubePicture.png)](https://www.youtube.com/watch?v=wwNAEvbxd54&list=PLVztKpIRxvQXhHlMQttCfYZrDN8aELnzP&index=1&t=1s) -->
+# Prerequisites
+1. If you do not have an IBM Cloud account yet, you will need to create one [here](https://ibm.biz/BdjLxy).
+
+2. Yeoman, to generate app skeleton.
+```npm install -g yo```
 
 # Steps
 
-Use the ``Deploy to IBM Cloud`` button **OR** create the services and run locally.
+<!-- In this code pattern, we will use the blockchain-starter-kit repository: https://github.com/sstone1/blockchain-starter-kit to
+deploy our smart contract to the cloud. This repo will help us create a DevOps toolchain to automate deployment.
 
-## Deploy to IBM Cloud
-If you do not have an IBM Cloud account yet, you will need to create one [here](https://ibm.biz/BdjLxy).
+1. Go to https://github.com/sstone1/blockchain-starter-kit
+2. Go to step 2, and click on `Set up DevOps toolchain`.
+3. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. 
+4. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project.
+5. In terminal, execute the following
+```git clone https://github.com/<yourUsername/projectname>.git```
+6. Now you should have a project structure ready. Woo! Halfway there!
+7. Now to the fun part, the smart contracts. Let's us use Yeoman. 
+```
+$ cd contracts
+$ yo
+```
+Select `Hyperledger Composer`
+Select `Business Network`
+Business network name: `coffeetracker`
+Description: `demo`
+Author Name: `Horea`
+Author Email: `Horea@email`
+License: `(Apache-2.0)`
+Namespace: `org.ibm.coffee`
+8. Your folder structure should now be created. Go into your smart contract directory. We will now copy over the smart contract code from our code pattern. But first, we remove some content we don't need yet.
+``` 
+ $ cd contracts/coffeetracker
+ ```
+
+ ![packageFile](/docs/packageFile.png)
+
+ 9. Now, inside the `package.json` file, remove the lines that start with `pretest`, `lint`, and `test`. Then, remove the `test` and the `features` directory. Then, we will need to paste some code from the code pattern.
+
+ 10. Rename `models/ibm.coffee.cto` to `model.cto`
+ 
+ 11. Let's copy and of the code from the following URLs: the model file, `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto`, the logic file,
+ `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/lib/logic.js`, 
+ and the permissions file: `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/permissions.acl`. 
+12. Create a new file called `queries.qry`, and paste in the code from here: `https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/queries.qry`. 
+
+13. Comment everything inside the `test/logic.js` file.
+14. Same with the `features/support/index.js` file.
+15. Remove all lines from `features/sample.feature`
+
+16. Now, in terminal, let's push our code up to the GitHub repo with the following commands:
+```
+$ git add .
+$ git commit -m "first commit"
+$ git push origin master
+``` -->
+
+<!-- ## Deploy to IBM Cloud -->
+
 
 <!-- [![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-second-opinion) -->
+# Links
+
+* [IBM Blockchain - Marbles demo](https://github.com/IBM-Blockchain/marbles)
+* [Hyperledger Composer](https://hyperledger.github.io/composer/latest/index.html)
+
 
 # Learn more
 
-<!-- * **Blockchain Code Patterns**: Enjoyed this Code Pattern? Check out our other [Node.js Code Patterns](https://developer.ibm.com/code/technologies/node-js/) -->
+* **Blockchain Code Patterns**: Enjoyed this Code Pattern? Check out our other [Blockchain Code Patterns](https://developer.ibm.com/code/technologies/blockchain/)
 
+* **Blockchain 101**: Learn why IBM believes that blockchain can transform businesses, industries – and even the world. [Blockchain 101](https://developer.ibm.com/code/technologies/blockchain/)
 
 # License
 [Apache 2.0](LICENSE)
+
