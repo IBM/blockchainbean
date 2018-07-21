@@ -26,7 +26,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 * [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
 
 ## Featured technologies
-* [Blockchain](https://nodejs.org/): An open-source JavaScript run-time environment for executing server-side JavaScript code.
+* [IBM Blockchain](https://www.ibm.com/blockchain): Blockchain is a shared, immutable ledger for recording the history of transactions.
 * [Databases](https://en.wikipedia.org/wiki/IBM_Information_Management_System#.22Full_Function.22_databases): Repository for storing and managing collections of data.
 * [Cloud](https://www.ibm.com/developerworks/learn/cloud/): Accessing computer and information technology resources through the Internet.
 
