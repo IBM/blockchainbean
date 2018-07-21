@@ -64,18 +64,20 @@ Author Name: `Horea`
 Author Email: `Horea@email`
 License: `(Apache-2.0)`
 Namespace: `org.ibm.coffee`
+
 8. Your folder structure should now be created. Go into your smart contract directory. We will now copy over the smart contract code from our code pattern. But first, we remove some content we don't need yet.
+
 ``` 
  $ cd contracts/coffeetracker
  ```
 
  ![packageFile](/docs/packageFile.png)
 
- 9. Now, inside the `package.json` file, remove the lines that start with `pretest`, `lint`, and `test`. Then, remove the `test` and the `features` directory. Then, we will need to paste some code from the code pattern.
+ 9. Now, inside the `package.json` file, remove the lines that start with `pretest`, `lint`, and `test`. Then, remove the `test` and the `features` directory as shown above. Then, we will need to paste some code from the code pattern.
 
  10. Rename `models/ibm.coffee.cto` to `model.cto`
  
- 11. Let's copy and of the code from the following URLs: the model file, https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto, the logic file,
+ 11. Let's copy the code from the following URLs: the model file, https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto, the logic file,
  https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/lib/logic.js, 
  and the permissions file: https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/permissions.acl. 
 12. Create a new file called `queries.qry`, and paste in the code from here: https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/queries.qry. 
@@ -93,14 +95,16 @@ $ git push origin master
 
 17. Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
 
-18. Find the application starting with composer-rest-server<your-smart-contract-name-here>. Click it and then click `visit App url`.
+ ![packageFile](/docs/cloudFoundry.png)
+18. Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`.
 
 
 19. Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
 ```{ 
   "$class": "org.ibm.coffee.pourCup",
   "cupId": "CJB0119" 
-}```
+}
+```
 
 ![blockchainService](/docs/blockchainService.png)
 20. Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
