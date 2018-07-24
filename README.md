@@ -53,6 +53,9 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 ![medium](https://i.makeagif.com/media/7-24-2018/rsJHEa.gif)
 
+<img src="https://i.makeagif.com/media/7-24-2018/rsJHEa.gif" width="400" height="400" />
+
+
 2. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. 
 
 ![git clone](https://i.makeagif.com/media/7-24-2018/hwM4I_.gif)
