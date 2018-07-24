@@ -51,21 +51,17 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 ## Step 1/2: Create the toolchain
 
- ![packageFile](/docs/step12.gif) -->
+ ![packageFile](/docs/step12.gif)
 
 
 1. Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click on `Set up DevOps toolchain`.
 
-
-
-
-
-
-2. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. 
+2. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. Just refresh the toolchain page, and you should see your toolchain have 3 parts - think, code, delivery.  
 
 ## Step 3: Clone the repo
 
-<!-- <img src="https://i.makeagif.com/media/7-24-2018/rsJHEa.gif" width="720" height="450" /> -->
+ ![packageFile](/docs/gitClone.gif)
+
 
 3. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project.
 5. In terminal, execute the following
