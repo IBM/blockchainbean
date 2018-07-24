@@ -44,7 +44,8 @@ When the reader has completed this Code Pattern, they will understand how to:
 In this code pattern, we will use the blockchain-starter-kit repository: https://github.com/sstone1/blockchain-starter-kit to
 deploy our smart contract to the cloud. This repo will help us create a DevOps toolchain to automate deployment.
 
-![start](https://i.makeagif.com/media/7-24-2018/mYOgmO.gif)
+![fd](https://i.makeagif.com/media/7-24-2018/MATtPg.gif)
+
 1. Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click on `Set up DevOps toolchain`.
 
 
