@@ -44,7 +44,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 In this code pattern, we will use the blockchain-starter-kit repository: https://github.com/sstone1/blockchain-starter-kit to
 deploy our smart contract to the cloud. This repo will help us create a DevOps toolchain to automate deployment.
 
-<img src="https://i.makeagif.com/media/7-24-2018/MATtPg.gif" width="720" height="450" />
+<!-- <img src="https://i.makeagif.com/media/7-24-2018/MATtPg.gif" width="720" height="450" /> -->
 
 
 <!-- ![fd](https://i.makeagif.com/media/7-24-2018/MATtPg.gif) -->
@@ -55,9 +55,9 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 1. Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click on `Set up DevOps toolchain`.
 
 
-![toolchain](https://i.makeagif.com/media/7-23-2018/4jgYbH.gif)
+<!-- ![toolchain](https://i.makeagif.com/media/7-23-2018/4jgYbH.gif)
 
- ![packageFile](/docs/asdf.gif)
+ ![packageFile](/docs/asdf.gif) -->
 
 
 
@@ -65,7 +65,7 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 ## Step 3: Clone the repo
 
-<img src="https://i.makeagif.com/media/7-24-2018/rsJHEa.gif" width="720" height="450" />
+<!-- <img src="https://i.makeagif.com/media/7-24-2018/rsJHEa.gif" width="720" height="450" /> -->
 
 3. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project.
 5. In terminal, execute the following
