@@ -153,10 +153,17 @@ Click on the `Delivery` stage.
 The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage as shown in the gif. Next, wait for the pipeline to start.
 If there are errors, you may want to check the logs by pressing the `View logs and history` option link on the `Build` stage. Once you successfully Build, the `Deploy` stage should be triggered. Same as with the `Build` stage, you may want to check the logs if there are errors.
 
+Let's check the logs of the `Deploy` stage by clicking the `View logs and history` button as shown in the gif. We can find the URL of our Cloud Foundry app 
+by finding the `REST_SERVER_URLS` line, close to the bottom of the logs as shown in the gif. 
+
+
+<!-- 
 Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
 
  ![packageFile](/docs/cloudFoundry.png)
-Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`.
+Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`. -->
+
+This will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Kit instance. We won't go into too much detail here, but you can find more on Simon's repo.
 
 ![pourCup](/docs/pourCup.png)
 Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
