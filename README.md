@@ -68,7 +68,7 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 ## Step 4: Use Yeoman to scaffold your project
 
- ![packageFile](/docs/yo.gif)
+ ![packageFile](/docs/yeoman.gif)
 
 4. Now to the fun part, the smart contracts. Let's use Yeoman. 
 ```
