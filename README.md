@@ -140,9 +140,18 @@ $ git push origin master
 ```
 
 ## Step 6: Try it out!
-Now, we need to check our toolchain that we created in Step 2. Click on the `Delivery` stage.
 
-The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage.
+ ![packageFile](/docs/delivery.gif)
+
+Now, we need to check our toolchain that we created in Step 2.
+
+Let's go back to our GitHub repo that we just created. Click on the link that says
+ `Created for Toolchain: ` in the title of the GitHub repo. You will be taken to your `IBM Cloud Toolchains` page.  
+
+Click on the `Delivery` stage.
+
+The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage as shown in the gif. Next, wait for the pipeline to start.
+If there are errors, you may want to check the logs by pressing the `View logs and history` option link on the `Build` stage. Once you successfully Build, the `Deploy` stage should be triggered. Same as with the `Build` stage, you may want to check the logs if there are errors.
 
 Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
 
