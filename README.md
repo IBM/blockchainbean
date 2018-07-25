@@ -56,32 +56,42 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 1. Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click on `Set up DevOps toolchain`.
 
-2. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. Just refresh the toolchain page, and you should see your toolchain have 3 parts - think, code, delivery.  
+2. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. Just refresh the toolchain page, and you should see your toolchain have 3 parts - think, code, delivery, as shown in the gif below.  
 
 ## Step 3: Clone the repo
 
  ![packageFile](/docs/gitClone.gif)
 
 
-3. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project.
-5. In terminal, execute the following
+3. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project. In terminal, execute the following
 ```git clone https://github.com/<yourUsername/projectname>.git```
-6. Now you should have a project structure ready. Woo! Halfway there!
-7. Now to the fun part, the smart contracts. Let's us use Yeoman. 
+
+## Step 4: Use Yeoman to scaffold your project
+
+ ![packageFile](/docs/yo.gif)
+
+4. Now to the fun part, the smart contracts. Let's use Yeoman. 
 ```
 $ cd contracts
 $ yo
 ```
 Select `Hyperledger Composer`
 Select `Business Network`
-Business network name: `coffeetracker`
+Business network name: `coffeetracker4`
 Description: `demo`
 Author Name: `Horea`
 Author Email: `Horea@email`
 License: `(Apache-2.0)`
 Namespace: `org.ibm.coffee`
+Do you want to generate an empty template network?: `Yes`
 
-8. Your folder structure should now be created. Go into your smart contract directory. We will now copy over the smart contract code from our code pattern. But first, we remove some content we don't need yet.
+## Step 5: Add, commit, push smart contract code
+
+5. Your folder structure should now be created. Now we need to add the smart 
+contract code from blockchainbean to your personal git repo. Let's copy and paste the code, as shown in the gif below. One thing to note is that we want to delete the `pretest`,
+`lint`, and `test` lines in the `package.json`, since we won't worry about linting now.
+
+
 
 ``` 
  $ cd contracts/coffeetracker
