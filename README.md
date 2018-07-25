@@ -176,7 +176,7 @@ Next, let's query our newly created cup, with our unique cupId. Click on `Query`
 
 ## Step 8: Launch your IBM Blockchain Starter Kit service
 
-![packageFile](/docs/launch.gif)
+![packageFile](/docs/launch1.gif)
 
 <!-- Each time we made a POST request in step 7, that created a block on the blockchain. Next, we will go into our IBM Cloud Blockchain service, and inspect some of the transactions that we 
 POST'ed on our Composer REST Server. You can imagine using those API endpoints from the Composer REST Server instance to create a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a block to be added to your blockchain on the IBM Blockchain Starter Kit service. But for now, let's just get familiar with the IBM Blockchain Starter Kit service. -->
