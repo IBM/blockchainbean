@@ -162,6 +162,8 @@ by finding the `REST_SERVER_URLS` line, close to the bottom of the logs as shown
 ## Step 7: Post transactions to IBM Blockchain Starter Kit
 Once you click on your application URL (this is your Cloud Foundry Node.js application), this will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Kit instance. We won't go into too much detail here, but you can find more on Simon's repo.
 
+ ![packageFile](/docs/API.gif)
+
 ![pourCup](/docs/pourCup.png)
 Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
 ```{ 
