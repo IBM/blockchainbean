@@ -162,9 +162,8 @@ by finding the `REST_SERVER_URLS` line, close to the bottom of the logs as shown
 ## Step 7: Post transactions to IBM Blockchain Starter Kit
 Once you click on your application URL (this is your Cloud Foundry Node.js application), this will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Kit instance. We won't go into too much detail here, but you can find more on Simon's repo.
 
- ![packageFile](/docs/API.gif)
+![packageFile](/docs/API.gif)
 
-![pourCup](/docs/pourCup.png)
 Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
 ```{ 
   "$class": "org.ibm.coffee.pourCup",
@@ -172,11 +171,12 @@ Next, go to POST /pourCup, and then paste the following JSON in the data field a
 }
 ```
 
-![blockchainService](/docs/blockchainService.png)
+Next, let's query our newly created cup, with our unique cupId. Click on `Query` and GET `getCupData`. Enter in your cupId from above. You should see the relevant details registered from your post call in step 19 above. Nice job! You successfully queried the blockchain.
+
 Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
 
 ![blockchainService](/docs/getCupCoffee.png)
-Let's go back to our Cloud foundry app. Let's click on GET /cupCoffee. Note that the `cupId` that you see there. Now, let's go to our queries. Click on `Query` and GET `getCupData`. Enter in your cupId from above. You should see the relevant details registered from your post call in step 19 above. Nice job! You successfully queried the blockchain.
+
 
 Using these API endpoints you can start building web and mobile applications that call
 these endpoints to perform CRUD operations on the blockchain. 
