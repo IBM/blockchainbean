@@ -178,8 +178,7 @@ Next, let's query our newly created cup, with our unique cupId. Click on `Query`
 
 ![packageFile](/docs/launch1.gif)
 
-<!-- Each time we made a POST request in step 7, that created a block on the blockchain. Next, we will go into our IBM Cloud Blockchain service, and inspect some of the transactions that we 
-POST'ed on our Composer REST Server. You can imagine using those API endpoints from the Composer REST Server instance to create a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a block to be added to your blockchain on the IBM Blockchain Starter Plan service. But for now, let's just get familiar with the IBM Blockchain Starter Plan service. -->
+
 
 Next, click on the IBM Cloud in the top left corner, and then use the search bar to find your blockchain service that you created from step 2. Click on it, and then on `Launch`. 
 
@@ -189,14 +188,17 @@ Next, click on the IBM Cloud in the top left corner, and then use the search bar
 
 After we launch our IBM Blockchain Starter Plan, let's click on channels on the left-side of the page. You will be greeted with your `defaultchannel` and a dashboard of your blockchain. It will show you details such as number of blocks, time since the last transaction, and recent invokations. We can click on the blue arrow  to expand the details of our block. In this gif, we expland `BLOCK NUMBER 4`. We see the date and time of the transaction, the type of transaction, the UUID, the Chaincode ID and some other actions we can take. Let's click on the 3-dot symobol, under `ACTIONS` and then `View Details`. This will give you your block details. You will see even more specific details of your transaction here, such as the JSON object that is written to the ledger. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
 
+ ![packageFile](/docs/2more.gif)
 
-I'll quickly show you just one more transaction, and just how fast your blocks are 
+I'll quickly show you two more transactions in the gif above, mainly just to show you how fast your blocks are 
 registered on the IBM Blockchain Starter Plan. 
 
-Using these API endpoints you can start building web and mobile applications that call
-these endpoints to perform CRUD operations on the blockchain. 
+Each time we make a POST request to /pourCup as shown in the gif above, we create a block on the blockchain. You can imagine using those /pourCup endpoints from the Composer REST Server instance to create a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a POST request to our Composer Rest Server instance, and then a block to be added to your blockchain on the IBM Blockchain Starter Plan service. 
 
-Thank you for reading, and go build something awesome!
+Using these API endpoints you can create applications that leverage the industry standard for blockchain developers - Hyperledger Fabric. This pattern showed you how to build an app with 
+Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain, and create (Composer-rest-Server) a Node.js Cloud (Foundry) application with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.     
+
+Thank you for reading, and go build something awesome! 🙌🏼
 
 <!-- ## Deploy to IBM Cloud -->
 
