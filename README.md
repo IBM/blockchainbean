@@ -174,15 +174,14 @@ Next, go to POST /pourCup, and then paste the following JSON in the data field a
 
 Next, let's query our newly created cup, with our unique cupId. Click on `Query` and GET `/queries/getCupData` and enter in your cupId from above. Then click `Try it out!`.  You should see the relevant details registered from your recent POST call on `/pourCup`. Nice job! You successfully queried the blockchain.
 
-## Step 8: Inspect newly added blocks in IBM Blockchain Starter Kit service
+## Step 8: Launch your IBM Blockchain Starter Kit service
 
-Each time we made a POST request in step 7, that created a block on the blockchain. Next, we will go into our IBM Cloud Blockchain service, and inspect some of the transactions that we 
-POST'ed on our Composer REST Server. You can imagine using those API endpoints from the Composer REST Server instance to create a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a block to be added to your blockchain on the IBM Blockchain Starter Kit service. But for now, let's just get familiar with the IBM Blockchain Starter Kit service.
+![packageFile](/docs/launch.gif)
 
-Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
+<!-- Each time we made a POST request in step 7, that created a block on the blockchain. Next, we will go into our IBM Cloud Blockchain service, and inspect some of the transactions that we 
+POST'ed on our Composer REST Server. You can imagine using those API endpoints from the Composer REST Server instance to create a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a block to be added to your blockchain on the IBM Blockchain Starter Kit service. But for now, let's just get familiar with the IBM Blockchain Starter Kit service. -->
 
-![blockchainService](/docs/getCupCoffee.png)
-
+Next, click on the IBM Cloud in the top left corner, and then use the search bar to find your blockchain service that you created from step 2. Click on it, and then on `Launch`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
 
 Using these API endpoints you can start building web and mobile applications that call
 these endpoints to perform CRUD operations on the blockchain. 
