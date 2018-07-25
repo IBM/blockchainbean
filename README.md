@@ -153,7 +153,7 @@ Click on the `Delivery` stage.
 The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage as shown in the gif. Next, wait for the pipeline to start.
 If there are errors, you may want to check the logs by pressing the `View logs and history` option link on the `Build` stage.
 
- ![packageFile](/docs/delivery.gif)
+ ![packageFile](/docs/cfApp.gif)
 Once the app successfullys builds (you can check this with a simple page refresh), the `Deploy` stage should be triggered. Same as with the `Build` stage, you may want to check the logs if there are errors.
 
 Let's check the logs of the `Deploy` stage by clicking the `View logs and history` button as shown in the gif. We can find the URL of our Cloud Foundry app 
