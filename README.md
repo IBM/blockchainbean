@@ -71,26 +71,32 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
  ![packageFile](/docs/yeoman.gif)
 
 4. Now to the fun part, the smart contracts. Let's use Yeoman. 
+
+
 ```
 $ cd contracts
 $ yo
 ```
-Select `Hyperledger Composer`
-Select `Business Network`
-Business network name: `coffeetracker4`
-Description: `demo`
-Author Name: `Horea`
-Author Email: `Horea@email`
+```
+-> `Hyperledger Composer`
+-> `Business Network`
+Business network name: `<your network name>`
+Description: `<your description>`
+Author Name: `your name`
+Author Email: `<your email>`
 License: `(Apache-2.0)`
-Namespace: `org.ibm.coffee`
+Namespace: `<your namespace>`
 Do you want to generate an empty template network?: `Yes`
+```
 
 ## Step 5: Add, commit, push smart contract code
+
+ ![packageFile](/docs/pastePermissions.gif)
+
 
 5. Your folder structure should now be created. Now we need to add the smart 
 contract code from blockchainbean to your personal git repo. Let's copy and paste the code, as shown in the gif below. One thing to note is that we want to delete the `pretest`,
 `lint`, and `test` lines in the `package.json`, since we won't worry about linting now.
-
 
 
 ``` 
