@@ -139,7 +139,7 @@ $ git commit -m "first commit"
 $ git push origin master
 ```
 
-## Step 6: Try it out!
+## Step 6: Deploy your smart contract to IBM Blockchain Starter Kit
 
  ![packageFile](/docs/delivery.gif)
 
@@ -159,14 +159,8 @@ Once the app successfullys builds (you can check this with a simple page refresh
 Let's check the logs of the `Deploy` stage by clicking the `View logs and history` button as shown in the gif. We can find the URL of our Cloud Foundry app 
 by finding the `REST_SERVER_URLS` line, close to the bottom of the logs as shown in the gif. 
 
-
-<!-- 
-Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
-
- ![packageFile](/docs/cloudFoundry.png)
-Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`. -->
-
-This will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Kit instance. We won't go into too much detail here, but you can find more on Simon's repo.
+## Step 7: Post transactions to IBM Blockchain Starter Kit
+Once you click on your application URL (this is your Cloud Foundry Node.js application), this will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Kit instance. We won't go into too much detail here, but you can find more on Simon's repo.
 
 ![pourCup](/docs/pourCup.png)
 Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
@@ -186,11 +180,6 @@ Using these API endpoints you can start building web and mobile applications tha
 these endpoints to perform CRUD operations on the blockchain. 
 
 Thank you for reading, and go build something awesome!
-
-
-
-
-
 
 <!-- ## Deploy to IBM Cloud -->
 
