@@ -193,12 +193,12 @@ After we launch our IBM Blockchain Starter Plan, let's click on channels on the 
 I'll quickly show you two more transactions in the gif above, mainly just to show you how fast your blocks are 
 registered on the IBM Blockchain Starter Plan. 
 
-Each time we make a POST request to /pourCup as shown in the gif above, we create a block on the blockchain. You can imagine using those /pourCup endpoints from the Composer REST Server instance with a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a POST request to our Composer Rest Server instance, and then a block to be added to your blockchain on the IBM Blockchain Starter Plan service. 
+Each time we make a POST request to /pourCup as shown in the gif above, we create a block on the blockchain. You can imagine using those /pourCup endpoints from the Composer REST Server instance with a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a POST request to our Composer Rest Server instance, and then trigger a block to be added to your blockchain on the IBM Blockchain Starter Plan service. 
 
 Using these API endpoints you can create applications that leverage the industry standard for blockchain developers - Hyperledger Fabric. This pattern showed you how to build an app with 
-Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain, and create (Composer-rest-Server) a Node.js Cloud (Foundry) application with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.     
+Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.     
 
-Thank you for reading, and go build something awesome! 🙌🏼
+Thank you for reading, I hope you enjoyed it. Go build something awesome! 🙌🏼
 
 <!-- ## Deploy to IBM Cloud -->
 
