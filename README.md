@@ -66,6 +66,12 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 3. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project. In terminal, execute the following
 ```git clone https://github.com/<yourUsername/projectname>.git```
 
+Go into your newly cloned repo. I called my bsk-horea-2.
+
+```
+$ cd bsk-horea-2
+```
+
 ## Step 4: Use Yeoman to scaffold your project
 
  ![packageFile](/docs/yeoman.gif)
@@ -78,61 +84,71 @@ $ cd contracts
 $ yo
 ```
 ```
--> `Hyperledger Composer`
--> `Business Network`
-Business network name: `<your network name>`
-Description: `<your description>`
-Author Name: `your name`
-Author Email: `<your email>`
-License: `(Apache-2.0)`
-Namespace: `<your namespace>`
-Do you want to generate an empty template network?: `Yes`
+$ -> `Hyperledger Composer`
+$ -> `Business Network`
+$ Business network name: `<your network name>`
+$ Description: `<your description>`
+$ Author Name: `your name`
+$ Author Email: `<your email>`
+$ License: `(Apache-2.0)`
+$ Namespace: `<your namespace>`
+$ Do you want to generate an empty template network?: `Yes`
 ```
 
 ## Step 5: Add, commit, push smart contract code
 
+5.
+
+ ![packageFile](/docs/packageJson.gif)
+
+ First, we need to modify some lines from your newly scaffoled application. Let's cut a few lines inside the `package.json` file. This is found in the
+ `bsk-horea-2/contracts/package.json` file.
+ 
+ Let's remove the lines that start with `pretest`, `lint`, and `test`.
+
  ![packageFile](/docs/pastePermissions.gif)
 
+ Next, let's first clone the blockchain bean
+directory.
+```
+$ git clone https://github.com/IBM/blockchainbean.git
+```
 
-5. Your folder structure should now be created. Now we need to add the smart 
-contract code from blockchainbean to your personal git repo. Let's copy and paste the code, as shown in the gif below. One thing to note is that we want to delete the `pretest`,
-`lint`, and `test` lines in the `package.json`, since we won't worry about linting now.
+Next, copy and paste the permissons.acl file from
+ `blockchainbean/contracts/coffeeTrackr/permissions.acl`
+and overwrite your permissons.acl file created from yeoman.
 
+ ![packageFile](/docs/pushRest.gif)
 
-``` 
- $ cd contracts/coffeetracker
- ```
+Next, we'll copy the queries.qry file from 
+`blockchainbean/contracts/coffeeTrackr/queries.qry` and paste it 
+in our directory. We shouldn't have a `queries.qry` yet.
 
- 
+After that, let's rename our `bsk-horea-2/contracts/models/org.ibm.coffee.cto` file to 
+`bsk-horea-2/contracts/models/model.cto`, and copy and paste that same file from the 
+blockchainbean directory, as we have been doing.
 
- ![packageFile](/docs/packageFile.png)
+The last file we need is `blockchainbean/contracts/coffeeTrackr/lib/logic.js` file, 
+and we can just grab that and paste the contents in `bsk-horea-2/contracts/lib/logic.js`.
 
- 9. Now, inside the `package.json` file, remove the lines that start with `pretest`, `lint`, and `test`. Then, remove the `test` and the `features` directory as shown above. Then, we will need to paste some code from the code pattern.
-
- 10. Copy over the smart contract code from https://github.com/IBM/blockchainbean. 
-
- 10. Rename `models/ibm.coffee.cto` to `model.cto`
- 
- 11. Let's copy the code from the following URLs: the model file, https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto, the logic file,
- https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/lib/logic.js, 
- and the permissions file: https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/permissions.acl. 
-12. Create a new file called `queries.qry`, and paste in the code from here: https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/queries.qry. 
-
-
-13. Now, in terminal, let's push our code up to the GitHub repo with the following commands:
+Now, in terminal, let's push our code up to the GitHub repo with the following commands:
 ```
 $ git add .
 $ git commit -m "first commit"
 $ git push origin master
 ```
 
-14. Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
+## Step 6: Try it out!
+
+6. The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage.
+
+Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
 
  ![packageFile](/docs/cloudFoundry.png)
-15. Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`.
+Find the application starting with composer-rest-server<your-smart-contract-name-here>. It should start with the name `composer-rest-server` as shown in red above. Click it and then click `visit App url`.
 
 ![pourCup](/docs/pourCup.png)
-16. Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
+Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
 ```{ 
   "$class": "org.ibm.coffee.pourCup",
   "cupId": "CJB0119" 
@@ -140,7 +156,7 @@ $ git push origin master
 ```
 
 ![blockchainService](/docs/blockchainService.png)
-17. Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
+Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
 
 ![blockchainService](/docs/getCupCoffee.png)
 18. Let's go back to our Cloud foundry app. Let's click on GET /cupCoffee. Note that the `cupId` that you see there. Now, let's go to our queries. Click on `Query` and GET `getCupData`. Enter in your cupId from above. You should see the relevant details registered from your post call in step 19 above. Nice job! You successfully queried the blockchain.
