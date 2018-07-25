@@ -97,11 +97,10 @@ $ Do you want to generate an empty template network?: `Yes`
 
 ## Step 5: Add, commit, push smart contract code
 
-5.
 
  ![packageFile](/docs/packageJson.gif)
 
- First, we need to modify some lines from your newly scaffoled application. Let's cut a few lines inside the `package.json` file. This is found in the
+5. First, we need to modify some lines from your newly scaffoled application. Let's cut a few lines inside the `package.json` file. This is found in the
  `bsk-horea-2/contracts/package.json` file.
  
  Let's remove the lines that start with `pretest`, `lint`, and `test`.
@@ -131,6 +130,8 @@ blockchainbean directory, as we have been doing.
 The last file we need is `blockchainbean/contracts/coffeeTrackr/lib/logic.js` file, 
 and we can just grab that and paste the contents in `bsk-horea-2/contracts/lib/logic.js`.
 
+ ![packageFile](/docs/gitPush.gif)
+
 Now, in terminal, let's push our code up to the GitHub repo with the following commands:
 ```
 $ git add .
@@ -139,8 +140,9 @@ $ git push origin master
 ```
 
 ## Step 6: Try it out!
+Now, we need to check our toolchain that we created in Step 2. Click on the `Delivery` stage.
 
-6. The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage.
+The pipeline should be triggered now. If it is not, simply go to it, and press the play button on the `Build` stage.
 
 Now, once the delivery pipline finishes, you will have a working Node.js Cloud Foundry instance. To find this, click on `IBM Cloud` in the top left corner to take you back to your applications. 
 
@@ -159,9 +161,9 @@ Next, go to POST /pourCup, and then paste the following JSON in the data field a
 Next, find your blockchain service. Click on it, and click on `Enter Monitor`. Then click on channels, and then on the first block. You should see something like the picture above. This should be your latest transaction, and should have your chaincodeId, which is just what you named your smart contract. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
 
 ![blockchainService](/docs/getCupCoffee.png)
-18. Let's go back to our Cloud foundry app. Let's click on GET /cupCoffee. Note that the `cupId` that you see there. Now, let's go to our queries. Click on `Query` and GET `getCupData`. Enter in your cupId from above. You should see the relevant details registered from your post call in step 19 above. Nice job! You successfully queried the blockchain.
+Let's go back to our Cloud foundry app. Let's click on GET /cupCoffee. Note that the `cupId` that you see there. Now, let's go to our queries. Click on `Query` and GET `getCupData`. Enter in your cupId from above. You should see the relevant details registered from your post call in step 19 above. Nice job! You successfully queried the blockchain.
 
-19. Using these API endpoints you can start building web and mobile applications that call
+Using these API endpoints you can start building web and mobile applications that call
 these endpoints to perform CRUD operations on the blockchain. 
 
 Thank you for reading, and go build something awesome!
