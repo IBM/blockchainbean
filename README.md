@@ -92,7 +92,7 @@ $ Description: `<your description>`
 $ Author Name: `your name`
 $ Author Email: `<your email>`
 $ License: `(Apache-2.0)`
-$ Namespace: `<your namespace>`
+$ Namespace: org.ibm.coffee
 $ Do you want to generate an empty template network?: `Yes`
 ```
 
