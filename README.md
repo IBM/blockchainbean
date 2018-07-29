@@ -80,17 +80,18 @@ $ cd bsk-horea-2
 
 
 ```
-$ npm install yeoman generator-hyperledger-composer
+$ npm install -g generator-hyperledger-composer
+$ npm install -g yo
 $ cd contracts
 $ yo
 ```
 ```
 $ -> `Hyperledger Composer`
 $ -> `Business Network`
-$ Business network name: `<your network name>`
-$ Description: `<your description>`
-$ Author Name: `your name`
-$ Author Email: `<your email>`
+$ Business network name: `coffeetracker4`
+$ Description: `demo`
+$ Author Name: `Horea`
+$ Author Email: `horea@email.com`
 $ License: `(Apache-2.0)`
 $ Namespace: org.ibm.coffee
 $ Do you want to generate an empty template network?: `Yes`
