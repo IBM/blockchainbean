@@ -80,6 +80,7 @@ $ cd bsk-horea-2
 
 
 ```
+$ npm install yeoman generator-hyperledger-composer
 $ cd contracts
 $ yo
 ```
