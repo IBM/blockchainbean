@@ -37,7 +37,10 @@ When the reader has completed this Code Pattern, they will understand how to:
 1. If you do not have an IBM Cloud account yet, you will need to create one [here](https://ibm.biz/BdjLxy).
 
 2. Yeoman, to generate app skeleton.
-```npm install -g yo```
+```
+$ npm install -g generator-hyperledger-composer
+$ npm install -g yo
+```
 
 # Steps
 
