@@ -171,7 +171,8 @@ Once you click on your application URL (this is your Cloud Foundry Node.js appli
 ![packageFile](/docs/API.gif)
 
 Next, go to POST /pourCup, and then paste the following JSON in the data field as shown in the picture above. Click `Try it out!`.
-```{ 
+```
+{ 
   "$class": "org.ibm.coffee.pourCup",
   "cupId": "CJB0119" 
 }
