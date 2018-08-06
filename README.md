@@ -319,7 +319,7 @@ What we now need to do is to do a `/GET` to /coffee. This will show us the batch
 have just added from the step above. Grab that batchId and use it in the subsequent steps.
 WARNING: IF YOU USE MINE YOU WILL GET AN ERROR!. 
 
- ![packageFile](/docs/submitFairTrade.gif)
+ ![packageFile](/docs/submitFairTradeDocs.gif)
 
 Next, the fun part. We need to upload the data received from our supply chain, and post it to the blockchain.
 To do this, we will `/POST` to /submitFairTradeData.
@@ -341,7 +341,7 @@ To do this, we will `/POST` to /submitFairTradeData.
   }
 ```
 
-![packageFile](/docs/submitPackingAndCoffee.gif)
+![packageFile](/docs/submitPackingListAndCoffee.gif)
 
 Next, we will continue adding supply chain data. We will submit the packing list invoice that 
 shows the shipping details of our coffee batch. To do this, we will simply `/POST` to 
@@ -372,7 +372,7 @@ to be the trader after this /submitPackingList transaction.
   }
 ```
 
-![packageFile](/docs/submitWeightTallyAndCheckCoffee.gif)
+![packageFile](/docs/submitWeightTally.gif)
 
 Nice. We're doing great so far. Keep it up! We're almost done :) 
 
