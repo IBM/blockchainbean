@@ -361,7 +361,7 @@ To do this, we will `/POST` to /submitFairTradeData.
 
 This data is based on the document that was given to us from the coffee roasting company. You can see 
 a screenshot of the document below. We are simply taking some of the important fields from that 
-document and uploading them.
+document and uploading them. https://www.ibm.com/thought-leadership/blockchainbean/static/FairTrade.pdf
 
 ![packageFile](/docs/submitPackingListAndCoffee.gif)
 
