@@ -196,7 +196,251 @@ registered on the IBM Blockchain Starter Plan.
 Each time we make a POST request to /pourCup as shown in the gif above, we create a block on the blockchain. You can imagine using those /pourCup endpoints from the Composer REST Server instance with a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a POST request to our Composer Rest Server instance, and then trigger a block to be added to your blockchain on the IBM Blockchain Starter Plan service. 
 
 Using these API endpoints you can create applications that leverage the industry standard for blockchain developers - Hyperledger Fabric. This pattern showed you how to build an app with 
-Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.     
+Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.   
+
+
+## Step 10: Create participants, and submit fair-trade supply data to the blockchain
+Now that we have learned how to use our composer-rest-server with the IBM Blockchain Starter Plan, let's get into the smart contracts that we have written. Let's look at our model file first, since that will show us the data schema for our 
+blockchain. You can find the model file at https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto.
+
+If we just look at the first few lines in our file, we will see that we have a few `enums` and `concepts`. I won't go into detail here,
+but you can learn more about these types here: https://hyperledger.github.io/composer/latest/reference/cto_language.html.
+
+ ![packageFile](/docs/createGrower.gif)
+
+Let's scroll down to the participants of our network, and we will see we have 5. We have a grower, a regulator, a trader, 
+a retailer, and a shipper. By creating different participants in the network, we can transfer ownership 
+of the coffee throughout the full life cycle of the supply chain. Let's first create the grower. The grower
+will have ownership of the coffee asset as the first part of the supply chain life cycle. We will simply
+`POST` to /grower. 
+
+```
+{
+  "$class": "org.ibm.coffee.Grower",
+  "isFairTrade": true,
+  "growerId": "Grower-0201",
+  "organization": "Ethiopia Gedeb 1 Banko Gotiti GrainPro",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "city": "Gedeb",
+    "country": "Ethiopia"
+  }
+}
+```
+<!-- 
+Next, we can create the shipper, just like we have created the grower above. We will simply `POST`
+to /shipper.
+
+```
+{
+  "$class": "org.ibm.coffee.Shipper",
+  "shipperId": "Maersk",
+  "organization": "A.P. Moller–Maersk Group",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "city": "Copenhagen",
+    "country": "Denmark"
+  }
+}
+```
+
+Next, we can create the regulator, just like we have created the grower above. We will simply `POST`
+to /regulator.
+
+```
+{
+  "$class": "org.ibm.coffee.Regulator",
+  "regulatorId": "ICO",
+  "organization": "International Coffee Organization",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "city": "London",
+    "country": "England",
+    "street": "22 Berners Street"
+  }
+}
+``` -->
+
+ ![packageFile](/docs/createTrader.gif)
+
+Again, we can create the trader, just like we have created the grower above. We will simply `POST`
+to /Trader.
+
+```
+{
+  "$class": "org.ibm.coffee.Trader",
+  "traderId": "Trader-0791",
+  "organization": "Royal Coffee New York",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "city": "South Plainfield",
+    "country": "USA",
+    "street": "661 Hadley Rd",
+    "zip": "07080"
+  }
+}
+```
+
+<!-- Lastly, we can create the retailer, just like we have created the grower above. We will simply `POST`
+to /retailer.
+
+```
+{
+  "$class": "org.ibm.coffee.Retailer",
+  "retailerId": "BrooklynRoasting",
+  "organization": "Brooklyn Roasting Company",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "city": "Brooklyn",
+    "country": "USA",
+    "street": "25 Jay St",
+    "zip": "11201"
+  }
+}
+``` -->
+ ![packageFile](/docs/addCoffee.gif)
+
+Next, we will create a batch of coffee on the network. This is going to be a large batch, and will 
+make many cups of coffee. We will simply `POST` to /addCoffee. Note that we are referencing 
+the growerId the we have created in the step above - the coffee will be owned by the grower at this 
+in the supply chain.
+
+```
+{
+  "$class": "org.ibm.coffee.addCoffee",
+  "size": "LARGE",
+  "roast": "DARK",
+  "batchState": "READY_FOR_DISTRIBUTION",
+  "grower": "resource:org.ibm.coffee.Grower#Grower-0201"
+}
+```
+
+What we now need to do is to do a `/GET` to /coffee. This will show us the batchId of the coffee we 
+have just added from the step above. Grab that batchId and use it in the subsequent steps.
+WARNING: IF YOU USE MINE YOU WILL GET AN ERROR!. 
+
+ ![packageFile](/docs/submitFairTrade.gif)
+
+Next, the fun part. We need to upload the data received from our supply chain, and post it to the blockchain.
+To do this, we will `/POST` to /submitFairTradeData.
+
+```
+{
+    "$class": "org.ibm.coffee.submitFairTradeData",
+    "reportName": "Fair Trade Coffee Supply Chain Report",
+    "organizationDescription": "YCFCU is an Ethiopian coffee producing, processing, and exporting cooperative union founded in 2002. YCFCU represents 23 base level cooperatives, all located in the Gedeo Zone, within the Southern NationsNationalities and Peope (SNNPR) ethnically-based region of Ethiopia. Given that its members depend on coffee as their sole source of income, YCFCU aims to maximize financial returns to its members through its linkages with international markets.",
+    "reportYear": 2016,
+    "fairtradePremiumInvested": "$182273",
+  "investmentTitle1": "School Classroom Addition",
+  "investmentAmount1": "$30,626",
+  "investmentTitle2": "Road Infrastructure",
+  "investmentAmount2": "$43,251",
+  "investmentTitle3": "Food Security",
+  "investmentAmount3": "$34,411",
+  "batchId": "2vf5yiaey"
+  }
+```
+
+![packageFile](/docs/submitPackingAndCoffee.gif)
+
+Next, we will continue adding supply chain data. We will submit the packing list invoice that 
+shows the shipping details of our coffee batch. To do this, we will simply `/POST` to 
+/submitPackingList. Note that all we did in our .cto file is create the necessary 
+fields based on the documents received from our supply chain. In our logic file, we just 
+simply set the data to the data fields. Finally, if we do a `/GET` on our coffee asset, 
+we will see that the asset will be updated with all of the data fields we have set 
+from our previous transactions. You will also see that the owner will be updated 
+to be the trader after this /submitPackingList transaction. 
+
+```
+  {
+    "$class": "org.ibm.coffee.submitPackingList",
+    "grower": "resource:org.ibm.coffee.Grower#Grower-0201",
+    "trader": "resource:org.ibm.coffee.Trader#Trader-0791",
+    "PL_Invoice_no": "0067",
+    "PL_IssueDate": "2017-09-19",
+    "PL_ICO_no": "010/0150/0128",
+    "PL_ICO_Lot": "Lot 7",
+    "PL_FDA_NO": "15752850924",
+    "PL_Bill_of_Lading_No": "961972237",
+    "PL_LoadedVessel": "NorthernMagnum",
+    "PL_VesselVoyage_No": "1707",
+    "PL_Container_No": "redacted",
+    "PL_Seal_no": "ML-Dj0144535 20 DRY 8’6",
+    "PL_timestamp": "2018-06-17",
+    "batchId": "23wrt3jnh"
+  }
+```
+
+![packageFile](/docs/submitWeightTallyAndCheckCoffee.gif)
+
+Nice. We're doing great so far. Keep it up! We're almost done :) 
+
+Next, we will submit the details of our coffee once we have received the shipment. We will get 
+some data from our supply chain about the status of our coffee. Does it have signs of insect activity?
+Does it have holes in the container? How many bags are expected? We will input all this data to the
+blockchain.
+
+```
+  {
+    "$class": "org.ibm.coffee.submitInboundWeightTally",
+    "coffeeBatch": "resource:org.ibm.coffee.Coffee#u94sf62run",
+    "dateStripped": "6 Oct 2017",
+    "marks": "010/0150/0128 Lot 7",
+    "bagsExpected": 150,
+    "condition": {
+      "$class": "org.ibm.coffee.Condition",
+      "condensation": false,
+      "holeInContainer": false
+    },
+    "insectActivity": false,
+    "batchId": "23wrt3jnh"
+  }
+```
+
+The last thing we will need to do is to submit our cupping details. Our retailer will rate how the 
+coffee tastes, and will give it an overall rating, based on flavor, aftertaste, and other details.
+To do this, we will simply `/POST` to /submitCupping. We can also make a `/GET` to coffee and 
+see that our batch is updated with all of our relevant supply chain data.
+
+```
+  {
+    "$class": "org.ibm.coffee.submitCupping",
+    "coffeeBatch": "resource:org.ibm.coffee.Coffee#4210",
+    "date": "12 April 2018",
+    "cupper": "Brian",
+    "aroma": 9,
+    "flavor": 8,
+    "afterTaste": 8,
+    "acidity": 8,
+    "body": 9,
+    "finalScore": 89.00,
+    "batchId": "23wrt3jnh"
+  }
+```
+
+Nice. Great job! So at this point, we have finished submitting all of the supply chain details. Give 
+yourself a pat on the back. You made it! So now, we have a working Proof of concept for tracking the 
+life cycle of coffee from the grower all the way to the retailer which sells it. Not only that, but we 
+even track the customer's purchase on the supply chain, and give them a way to see where exactly their 
+coffee is coming from, how much the growers were paid, who shipped the coffee, what condition the 
+coffee received in, and how the roasters rated the coffee. We have a lot here. Not only that, but we
+track the customer's purchase on the blockchain using /pourCup.
+
+## Bonus Step: Code Pattern summary
+
+To summarize, what we have done in the code pattern is model a supply chain network. We have taken 
+the documents given by the various participants in our supply-chain network and we have submitted
+the data to the blockchain. We have used the IBM Blockchain Starter Plan to easily inspect and 
+see our transactions details, and we have created REST-API endpoints in the cloud using 
+the starter-kit. We have used a delivery toolchain to deploy our smart contracts to the cloud, and 
+have made it easy to submit subsequent changes to the chaincode by simply committing new code to our
+GitHub repo. The delivery pipeline will detect any changes, and trigger our build and deliver stage 
+to create a new Cloud Foundry app with our REST-API endpoints. Those REST-API endpoints are linked 
+to our IBM Blockchain Starter Plan, so that each time we write data to the blockchain, we will be able 
+to view and inspect all the relevant details of our transactions on the platform. All we need is a nice
+UI where we can submit our transactions, and then in that UI we can simply use those REST-API endpoints 
+to submit data to the blockchain. Hope this was helpful, and as always, I am open to contributions.
 
 Thank you for reading, I hope you enjoyed it. Go build something awesome! 🙌🏼
 
