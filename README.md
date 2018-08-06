@@ -41,6 +41,17 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 # Steps
 
+1. [Create the toolchain](#1-create-the-toolchain)
+2. [Clone the repo](#2-clone-the-repo)
+3. [Use Yeoman to scaffold your project](#3-use-yeoman-to-scaffold-your-project)
+4. [Push smart contract code](#4-push-smart-contract-code)
+5. [Deploy smart contract to IBM Blockchain Starter Plan](#5-deploy-smart-contract-to-ibm-blockchain-starter-plan)
+6. [Post transactions and query the Composer REST Server (Swagger UI)](#6-post-transactions-and-query-the-composer-rest-server-Swagger-UI))
+7. [Launch IBM Blockchain Starter Plan](#7-launch-ibm-blockchain-starter-plan)
+8. [Inspect blocks on IBM Blockchain Starter Plan](#8-inspect-blocks-on-IBM-blockchain-starter-plan)
+9. [Submit fair trade supply data](#9-submit-fair-trade-supply-data)
+
+
 In this code pattern, we will use the blockchain-starter-kit repository: https://github.com/sstone1/blockchain-starter-kit to
 deploy our smart contract to the cloud. This repo will help us create a DevOps toolchain to automate deployment.
 
@@ -49,21 +60,21 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 <!-- ![fd](https://i.makeagif.com/media/7-24-2018/MATtPg.gif) -->
 
-## Step 1/2: Create the toolchain
+## Step 1: Create the toolchain
 
  ![packageFile](/docs/step12.gif)
 
 
-1. Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click on `Set up DevOps toolchain`.
+Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click on `Set up DevOps toolchain`.
 
-2. Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. Just refresh the toolchain page, and you should see your toolchain have 3 parts - think, code, delivery, as shown in the gif below.  
+Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. Just refresh the toolchain page, and you should see your toolchain have 3 parts - think, code, delivery, as shown in the gif below.  
 
-## Step 3: Clone the repo
+## Step 2: Clone the repo
 
  ![packageFile](/docs/gitClone.gif)
 
 
-3. Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project. In terminal, execute the following
+Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project. In terminal, execute the following
 ```git clone https://github.com/<yourUsername/projectname>.git```
 
 Go into your newly cloned repo. I called my bsk-horea-2.
@@ -72,11 +83,11 @@ Go into your newly cloned repo. I called my bsk-horea-2.
 $ cd bsk-horea-2
 ```
 
-## Step 4: Use Yeoman to scaffold your project
+## Step 3: Use Yeoman to scaffold your project
 
  ![packageFile](/docs/yeoman.gif)
 
-4. Now to the fun part, the smart contracts. Let's use Yeoman. 
+Now to the fun part, the smart contracts. Let's use Yeoman. 
 
 
 ```
@@ -95,12 +106,12 @@ $ Namespace: `<your namespace>`
 $ Do you want to generate an empty template network?: `Yes`
 ```
 
-## Step 5: Add, commit, push smart contract code
+## Step 4: Push smart contract code
 
 
  ![packageFile](/docs/packageJson.gif)
 
-5. First, we need to modify some lines from your newly scaffoled application. Let's cut a few lines inside the `package.json` file. This is found in the
+First, we need to modify some lines from your newly scaffoled application. Let's cut a few lines inside the `package.json` file. This is found in the
  `bsk-horea-2/contracts/package.json` file.
  
  Let's remove the lines that start with `pretest`, `lint`, and `test`.
@@ -139,7 +150,7 @@ $ git commit -m "first commit"
 $ git push origin master
 ```
 
-## Step 6: Deploy your smart contract to IBM Blockchain Starter Plan
+## Step 5: Deploy smart contract to IBM Blockchain Starter Plan
 
  ![packageFile](/docs/delivery.gif)
 
@@ -159,7 +170,7 @@ Once the app successfullys builds (you can check this with a simple page refresh
 Let's check the logs of the `Deploy` stage by clicking the `View logs and history` button as shown in the gif. We can find the URL of our Cloud Foundry app 
 by finding the `REST_SERVER_URLS` line, close to the bottom of the logs as shown in the gif. 
 
-## Step 7: Post transactions and querying the Composer REST Server (Swagger UI)
+## Step 6: Post transactions and query the Composer REST Server (Swagger UI)
 
 Once you click on your application URL (this is your Cloud Foundry Node.js application), this will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Plan instance. We won't go into too much detail here, but you can find more on Simon's repo.
 
@@ -174,7 +185,7 @@ Next, go to POST /pourCup, and then paste the following JSON in the data field a
 
 Next, let's query our newly created cup, with our unique cupId. Click on `Query` and GET `/queries/getCupData` and enter in your cupId from above. Then click `Try it out!`.  You should see the relevant details registered from your recent POST call on `/pourCup`. Nice job! You successfully queried the blockchain.
 
-## Step 8: Launch your IBM Blockchain Starter Plan service
+## Step 7: Launch IBM Blockchain Starter Plan
 
 ![packageFile](/docs/launch1.gif)
 
@@ -182,7 +193,7 @@ Next, let's query our newly created cup, with our unique cupId. Click on `Query`
 
 Next, click on the IBM Cloud in the top left corner, and then use the search bar to find your blockchain service that you created from step 2. Click on it, and then on `Launch`. 
 
-## Step 9: Inspect the blocks on our IBM Blockchain Starter Plan
+## Step 8: Inspect blocks on IBM Blockchain Starter Plan
 
  ![packageFile](/docs/5block.gif)
 
@@ -199,7 +210,7 @@ Using these API endpoints you can create applications that leverage the industry
 Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.   
 
 
-## Step 10: Create participants, and submit fair-trade supply data to the blockchain
+## Step 9: Submit fair trade supply data
 Now that we have learned how to use our composer-rest-server with the IBM Blockchain Starter Plan, let's get into the smart contracts that we have written. Let's look at our model file first, since that will show us the data schema for our 
 blockchain. You can find the model file at https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto.
 
