@@ -60,7 +60,7 @@ deploy our smart contract to the cloud. This repo will help us create a DevOps t
 
 <!-- ![fd](https://i.makeagif.com/media/7-24-2018/MATtPg.gif) -->
 
-## Step 1: Create the toolchain
+## Step 1. Create the toolchain
 
  ![packageFile](/docs/step12.gif)
 
@@ -69,7 +69,7 @@ Go to https://github.com/sstone1/blockchain-starter-kit. Go to step 2, and click
 
 Follow steps in the in the README to create your DevOps toolchain, and GitHub repository. At the end of this step you should have a toolchain with a github repo, and a delivery pipeline, as shown in the last part of step 2 of https://github.com/sstone1/blockchain-starter-kit. Just refresh the toolchain page, and you should see your toolchain have 3 parts - think, code, delivery, as shown in the gif below.  
 
-## Step 2: Clone the repo
+## Step 2. Clone the repo
 
  ![packageFile](/docs/gitClone.gif)
 
@@ -83,7 +83,7 @@ Go into your newly cloned repo. I called my bsk-horea-2.
 $ cd bsk-horea-2
 ```
 
-## Step 3: Use Yeoman to scaffold your project
+## Step 3. Use Yeoman to scaffold your project
 
  ![packageFile](/docs/yeoman.gif)
 
@@ -106,7 +106,7 @@ $ Namespace: `<your namespace>`
 $ Do you want to generate an empty template network?: `Yes`
 ```
 
-## Step 4: Push smart contract code
+## Step 4. Push smart contract code
 
 
  ![packageFile](/docs/packageJson.gif)
@@ -150,7 +150,7 @@ $ git commit -m "first commit"
 $ git push origin master
 ```
 
-## Step 5: Deploy smart contract to IBM Blockchain Starter Plan
+## Step 5. Deploy smart contract to IBM Blockchain Starter Plan
 
  ![packageFile](/docs/delivery.gif)
 
@@ -170,7 +170,7 @@ Once the app successfullys builds (you can check this with a simple page refresh
 Let's check the logs of the `Deploy` stage by clicking the `View logs and history` button as shown in the gif. We can find the URL of our Cloud Foundry app 
 by finding the `REST_SERVER_URLS` line, close to the bottom of the logs as shown in the gif. 
 
-## Step 6: Post transactions and query the Composer REST Server (Swagger UI)
+## Step 6. Post transactions and query the Composer REST Server (Swagger UI)
 
 Once you click on your application URL (this is your Cloud Foundry Node.js application), this will take you to your API documentation, or Swagger UI that was generated from the deployment scripts. The deployment scripts essentially created a Node.js Cloud Foundry instance that is connected to a IBM Blockchain Starter Plan instance. We won't go into too much detail here, but you can find more on Simon's repo.
 
@@ -185,7 +185,7 @@ Next, go to POST /pourCup, and then paste the following JSON in the data field a
 
 Next, let's query our newly created cup, with our unique cupId. Click on `Query` and GET `/queries/getCupData` and enter in your cupId from above. Then click `Try it out!`.  You should see the relevant details registered from your recent POST call on `/pourCup`. Nice job! You successfully queried the blockchain.
 
-## Step 7: Launch IBM Blockchain Starter Plan
+## Step 7. Launch IBM Blockchain Starter Plan
 
 ![packageFile](/docs/launch1.gif)
 
@@ -193,7 +193,7 @@ Next, let's query our newly created cup, with our unique cupId. Click on `Query`
 
 Next, click on the IBM Cloud in the top left corner, and then use the search bar to find your blockchain service that you created from step 2. Click on it, and then on `Launch`. 
 
-## Step 8: Inspect blocks on IBM Blockchain Starter Plan
+## Step 8. Inspect blocks on IBM Blockchain Starter Plan
 
  ![packageFile](/docs/5block.gif)
 
@@ -210,7 +210,7 @@ Using these API endpoints you can create applications that leverage the industry
 Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.   
 
 
-## Step 9: Submit fair trade supply data
+## Step 9. Submit fair trade supply data
 Now that we have learned how to use our composer-rest-server with the IBM Blockchain Starter Plan, let's get into the smart contracts that we have written. Let's look at our model file first, since that will show us the data schema for our 
 blockchain. You can find the model file at https://github.com/IBM/blockchainbean/blob/master/contracts/coffeeTrackr/models/model.cto.
 
