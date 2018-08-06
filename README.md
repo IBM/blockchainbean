@@ -363,6 +363,8 @@ This data is based on the document that was given to us from the coffee roasting
 a screenshot of the document below. We are simply taking some of the important fields from that 
 document and uploading them. https://www.ibm.com/thought-leadership/blockchainbean/static/FairTrade.pdf
 
+![packageFile](/docs/fairTradeDoc.png)
+
 ![packageFile](/docs/submitPackingListAndCoffee.gif)
 
 Next, we will continue adding supply chain data. We will submit the packing list invoice that 
