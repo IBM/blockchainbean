@@ -56,9 +56,9 @@ $ npm install -g yo
 3. [Use Yeoman to scaffold your project](#step-3-use-yeoman-to-scaffold-your-project)
 4. [Push smart contract code](#step-4-push-smart-contract-code)
 5. [Deploy smart contract to IBM Blockchain Starter Plan](#step-5-deploy-smart-contract-to-ibm-blockchain-starter-plan)
-6. [Post transactions and query the Composer REST Server (Swagger UI)](#step-6-post-transactions-and-query-the-composer-rest-server-Swagger-UI))
+6. [Post transactions and query the Composer REST Server (Swagger UI)](#step-6-post-transactions-and-query-the-composer-rest-server-swagger-ui)
 7. [Launch IBM Blockchain Starter Plan](#step-7-launch-ibm-blockchain-starter-plan)
-8. [Inspect blocks on IBM Blockchain Starter Plan](#step-8-inspect-blocks-on-IBM-blockchain-starter-plan)
+8. [Inspect blocks on IBM Blockchain Starter Plan](#step-8-inspect-blocks-on-ibm-blockchain-starter-plan)
 9. [Submit fair trade supply data](#step-9-submit-fair-trade-supply-data)
 
 
