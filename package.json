@@ -1,0 +1,14 @@
+{
+    "name": "blockchainbean",
+    "version": "1.0.0",
+    "description": "demo",
+    "author": "Horea Porutiu",
+    "license": "Apache-2.0",
+    "keywords": [
+        "Hyperledger",
+        "Fabric",
+        "Car",
+        "Sample",
+        "Application"
+    ]
+}
