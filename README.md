@@ -140,9 +140,9 @@ directory.
 $ git clone https://github.com/IBM/blockchainbean.git
 ```
 
-Next, copy and paste the permissons.acl file from
+Next, copy and paste the permissions.acl file from
  `blockchainbean/contracts/coffeeTrackr/permissions.acl`
-and overwrite your permissons.acl file created from yeoman.
+and overwrite your permissions.acl file created from yeoman.
 
  ![packageFile](/docs/pushRest.gif)
 
@@ -173,7 +173,7 @@ $ git push origin master
 Now, we need to check our toolchain that we created in Step 2.
 
 Let's go back to our GitHub repo that we just created. Click on the link that says
- `Created for Toolchain: ` in the title of the GitHub repo. You will be taken to your `IBM Cloud Toolchains` page.  
+ `Created for Toolchain:` in the title of the GitHub repo. You will be taken to your `IBM Cloud Toolchains` page.  
 
 Click on the `Delivery` stage.
 
