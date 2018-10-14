@@ -23,7 +23,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 
 ## Flow
 1. User submits transaction proposal using a web-app.
-2. The web-app talks to a REST-API which is running on Cloud Foundry.
+2. The web-app talks to a REST API which is running on Cloud Foundry.
 3. The REST API invokes chaincode on the peers of the blockchain network.
 4. The peers sign the transaction with their certificates which are held in Cloudant. The ledger is updated on the peers.
 
