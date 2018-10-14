@@ -22,11 +22,10 @@ When the reader has completed this Code Pattern, they will understand how to:
 ![Architecture](/docs/app-architecture.png)
 
 ## Flow
-1. The user deploys the app in IBM Cloud. The user submits transactions.
-2. The transaction is submitted to the blockchain.
-3. When the transaction conforms to the business logic, the data is written to the ledger.
-4. A block is appended to our chain on the IBM Blockchain Starter Plan for the specific channel.
-5. The user can query the blockchain for a particular asset, using the asset's unique id.
+1. User submits transaction proposal using a web-app.
+2. The web-app talks to a REST-API which is running on Cloud Foundry.
+3. The REST API invokes chaincode on the peers of the blockchain network.
+4. The peers sign the transaction with their certificates which are held in Cloudant. The ledger is updated on the peers.
 
 ## Included components
 * [IBM Blockchain Starter Plan](https://console.bluemix.net/catalog/services/blockchain): Use the IBM Blockchain Platform to simplify the developmental, governmental, and operational aspects of creating a blockchain solution.
