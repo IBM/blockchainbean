@@ -7,10 +7,10 @@
 
 This code pattern is based on a recent proof-of-concept developed in collaboration with 
 a coffee roasting company that was nice enough to let us use their supply-chain documents.
-The link to the application that the code pattern is based off of is here: https://www.ibm.com/blockchainbean
+The link to the application that the code pattern is based off of is here: https://www.ibm.com/thought-leadership/blockchainbean/
 
 All documents that were used in the supply chain are available online, and can be found by clicking the
-`view the blockchain` button at https://www.ibm.com/blockchainbean. 
+`view the blockchain` button at https://www.ibm.com/thought-leadership/blockchainbean/ 
 
 In this Code Pattern we will create a blockchain app that increases visibility and efficiency in the supply chain of a coffee retailer. The private keys and credentials of the blockchain application will be stored on a Cloudant database. We will use different transactions to show different possible actions for the different participants in the supply chain. This sample application will record all transactions on the IBM Blockchain Starter Plan, and enable a coffee retailer to ensure the customer that their coffee is organic and fair-trade. The Code Pattern can be useful to developers that are looking into learning more about creating applications that mimic a food trust supply chain with Hyperledger Composer.
 
@@ -90,7 +90,7 @@ Follow steps in the in the README to create your DevOps toolchain, and GitHub re
  ![packageFile](/docs/gitClone.gif)
 
 
-Now we need to clone the repo we have just created. Click on the github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project. In terminal, execute the following
+Now we need to clone the repo we have just created. Click on the Github button in the middle, which will take you to your new GitHub repo. Now, click on the green `clone or download` button on the right side of the page. This should give you a URL. Save this, you'll need it in the next step. Now in your terminal, find a place where you would like to start your project. In terminal, execute the following
 ```git clone https://github.com/<yourUsername/projectname>.git```
 
 Go into your newly cloned repo. I called my bsk-horea-2.
@@ -142,13 +142,13 @@ directory.
 $ git clone https://github.com/IBM/blockchainbean.git
 ```
 
-Next, copy and paste the permissions.acl file from
+Next, copy and paste the `permissions.acl` file from
  `blockchainbean/contracts/coffeeTrackr/permissions.acl`
 and overwrite your permissions.acl file created from yeoman.
 
  ![packageFile](/docs/pushRest.gif)
 
-Next, we'll copy the queries.qry file from 
+Next, we'll copy the `queries.qry` file from 
 `blockchainbean/contracts/coffeeTrackr/queries.qry` and paste it 
 in our directory. We shouldn't have a `queries.qry` yet.
 
@@ -216,7 +216,7 @@ Next, click on the IBM Cloud in the top left corner, and then use the search bar
 
  ![packageFile](/docs/5block.gif)
 
-After we launch our IBM Blockchain Starter Plan, let's click on channels on the left-side of the page. You will be greeted with your `defaultchannel` and a dashboard of your blockchain. It will show you details such as number of blocks, time since the last transaction, and recent invokations. We can click on the blue arrow  to expand the details of our block. In this gif, we expland `BLOCK NUMBER 4`. We see the date and time of the transaction, the type of transaction, the UUID, the Chaincode ID and some other actions we can take. Let's click on the 3-dot symobol, under `ACTIONS` and then `View Details`. This will give you your block details. You will see even more specific details of your transaction here, such as the JSON object that is written to the ledger. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
+After we launch our IBM Blockchain Starter Plan, let's click on channels on the left-side of the page. You will be greeted with your `defaultchannel` and a dashboard of your blockchain. It will show you details such as number of blocks, time since the last transaction, and recent invokations. We can click on the blue arrow to expand the details of our block. In this gif, we expland `BLOCK NUMBER 4`. We see the date and time of the transaction, the type of transaction, the UUID, the Chaincode ID and some other actions we can take. Let's click on the 3-dot symbol, under `ACTIONS` and then `View Details`. This will give you your block details. You will see even more specific details of your transaction here, such as the JSON object that is written to the ledger. Nice job! You successfully registered your transaction on the IBM Blockchain Platform! 👏🏼
 
  ![packageFile](/docs/2more.gif)
 
@@ -225,8 +225,7 @@ registered on the IBM Blockchain Starter Plan.
 
 Each time we make a POST request to /pourCup as shown in the gif above, we create a block on the blockchain. You can imagine using those /pourCup endpoints from the Composer REST Server instance with a mobile or web-ui. When certain button clicks or forms are submitted on that mobile or web-ui, each button click or form submission would trigger a POST request to our Composer Rest Server instance, and then trigger a block to be added to your blockchain on the IBM Blockchain Starter Plan service. 
 
-Using these API endpoints you can create applications that leverage the industry standard for blockchain developers - Hyperledger Fabric. This pattern showed you how to build an app with 
-Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.   
+Using these API endpoints you can create applications that leverage the industry standard for blockchain developers - Hyperledger Fabric. This pattern showed you how to build an app with Hyperledger Composer, deploy it onto the IBM Blockchain Starter Plan using a dev-ops toolchain. Our deployed app was simply a Swagger UI, with endpoints that perform CRUD (Create-read-update-delete) on a blockchain.   
 
 
 ## Step 9. Submit fair trade supply data
@@ -358,7 +357,7 @@ To do this, we will `/POST` to /submitFairTradeData.
 {
     "$class": "org.ibm.coffee.submitFairTradeData",
     "reportName": "Fair Trade Coffee Supply Chain Report",
-    "organizationDescription": "YCFCU is an Ethiopian coffee producing, processing, and exporting cooperative union founded in 2002. YCFCU represents 23 base level cooperatives, all located in the Gedeo Zone, within the Southern NationsNationalities and Peope (SNNPR) ethnically-based region of Ethiopia. Given that its members depend on coffee as their sole source of income, YCFCU aims to maximize financial returns to its members through its linkages with international markets.",
+    "organizationDescription": "YCFCU is an Ethiopian coffee producing, processing, and exporting cooperative union founded in 2002. YCFCU represents 23 base level cooperatives, all located in the Gedeo Zone, within the Southern Nations, Nationalities, and Peoples' Region (SNNPR) ethnically-based region of Ethiopia. Given that its members depend on coffee as their sole source of income, YCFCU aims to maximize financial returns to its members through its linkages with international markets.",
     "reportYear": 2016,
     "fairtradePremiumInvested": "$182273",
   "investmentTitle1": "School Classroom Addition",
