@@ -1,9 +1,8 @@
 <!-- [![Build Status](https://travis-ci.org/IBM/blockchainbean.svg?branch=master)](https://travis-ci.org/IBM/blockchainbean) -->
 
-# Create a fair trade supply network with Hyperledger Composer and IBM Blockchain Starter Plan
+# Create a fair trade supply network with Hyperledger Composer and IBM Blockchain Starter Plan - DEPRECATED - SEE updated pattern here: https://github.com/horeaporutiu/blockchainbean2
 
-****⚠️⚠️⚠️THIS PATTERN IS UNDER CONSTRUCTION TO SHIFT FROM COMPOSER TO HYPERLEDGER FABRIC⚠️⚠️⚠️****
-****⚠️⚠️⚠️THE STEPS OUTLINED BELOW WILL NOT WORK. UPDATE IS IN PROGRESS - HOREA⚠️⚠️⚠️****
+****⚠️⚠️⚠️THE STEPS OUTLINED BELOW WILL NOT WORK. UPDATE IS IN PROGRESS HERE: https://github.com/horeaporutiu/blockchainbean2 - HOREA⚠️⚠️⚠️****
 
 This code pattern is based on a recent proof-of-concept developed in collaboration with 
 a coffee roasting company that was nice enough to let us use their supply-chain documents.
